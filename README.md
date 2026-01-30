@@ -60,13 +60,10 @@
 
 <div align="center">
   <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=amansquadstack&theme=tokyonight&show_icons=true&hide_border=true&count_private=true" alt="Aman's GitHub Stats" width="48%">
-  
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=amansquadstack&theme=tokyonight&hide_border=true" alt="Aman's GitHub Streak" width="48%">
+
 </div>
 
-<div align="center">
-  <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=amansquadstack&theme=tokyonight&show_icons=true&hide_border=true&layout=compact" alt="Aman's Top Languages" width="40%">
-</div>
+
 
 ---
 
@@ -90,4 +87,8 @@
 
 <div align="center">
   <h3>💡 "Turning ideas into code, one commit at a time!"</h3>
+</div>
+<div align="center">
+  <img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="Built with Love">
+  <img src="https://forthebadge.com/images/badges/powered-by-coffee.svg" alt="Powered by Coffee">
 </div>
