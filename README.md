@@ -34,7 +34,7 @@
 ║  CLASS ......... Backend / Infra Mage    ║
 ║  GUILD ......... SquadStack              ║
 ║  REGION ........ ap-south-1              ║
-║  QUEST ......... B.Tech   ║
+║  QUEST ......... B.Tech                  ║
 ║  HP ............ ████████████░░  80/100  ║
 ║  MANA .......... ██████████████  ∞/∞     ║
 ║  COFFEE ........ ██████████████  MAX     ║
