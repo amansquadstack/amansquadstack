@@ -9,7 +9,7 @@
 <a href="https://www.linkedin.com/in/codewithaman07/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
 <a href="mailto:codewithaman07@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/></a>
 <a href="https://codolio.com/profile/codewithaman"><img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black"/></a>
-<img src="https://komarev.com/ghpvc/?username=codewithaman07&style=for-the-badge&color=7C3AED&label=PROFILE+VIEWS"/>
+<img src="https://komarev.com/ghpvc/?username=amansquadstack&style=for-the-badge&color=7C3AED&label=PROFILE+VIEWS"/>
 
 </div>
 
@@ -64,16 +64,16 @@ const aman = {
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=codewithaman07&show_icons=true&hide_border=true&count_private=true&theme=tokyonight&bg_color=0d1117&title_color=7C3AED&icon_color=00E5FF&cache_seconds=1800" height="165" />
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=codewithaman07&layout=compact&hide_border=true&theme=tokyonight&bg_color=0d1117&title_color=7C3AED&langs_count=8&cache_seconds=1800" height="165" />
+<img src="https://github-readme-stats.vercel.app/api?username=amansquadstack&show_icons=true&hide_border=true&count_private=true&theme=tokyonight&bg_color=0d1117&title_color=7C3AED&icon_color=00E5FF&cache_seconds=1800" height="165" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=amansquadstack&layout=compact&hide_border=true&theme=tokyonight&bg_color=0d1117&title_color=7C3AED&langs_count=8&cache_seconds=1800" height="165" />
 
 <br/><br/>
 
-<img src="https://streak-stats.demolab.com?user=codewithaman07&hide_border=true&background=0d1117&stroke=7C3AED&ring=00E5FF&fire=FF6B6B&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=7C3AED&sideLabels=7C3AED&dates=8B949E" height="165" />
+<img src="https://streak-stats.demolab.com?user=amansquadstack&hide_border=true&background=0d1117&stroke=7C3AED&ring=00E5FF&fire=FF6B6B&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=7C3AED&sideLabels=7C3AED&dates=8B949E" height="165" />
 
 <br/><br/>
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=codewithaman07&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=7C3AED&line=00E5FF&point=FF6B6B&area=true&area_color=302b63" width="95%" />
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=amansquadstack&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=7C3AED&line=00E5FF&point=FF6B6B&area=true&area_color=302b63" width="95%" />
 
 </div>
 
