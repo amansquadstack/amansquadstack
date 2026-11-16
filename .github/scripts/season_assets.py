@@ -97,10 +97,34 @@ def blobs(w, h, strength=1.0):
 
 
 def particles(cfg, rng, w, h, count, mode="fall", smin=0.55, smax=1.35, omin=0.55, omax=0.95):
-    """mode: 'fall' (top -> bottom) or 'drift' (left -> right)."""
+    """mode: 'fall' (top -> bottom), 'drift' (left -> right, looping) or
+    'gust' (one fast sweep across on page load, then gone)."""
     out = []
     shape = cfg["shape"]
     count = max(1, round(count * cfg["density"]))
+    if mode == "gust":
+        for _ in range(count):
+            y = rng.uniform(10, h - 10)
+            lift = rng.uniform(-60, 40)
+            dur = rng.uniform(1.6, 2.6)
+            begin = rng.uniform(0, 0.9)
+            scale = rng.uniform(smin, smax)
+            color = rng.choice(cfg["colors"])
+            if shape == "firefly":
+                glyph = f'<circle r="{8 * scale:.1f}" fill="url(#ffglow)"/>'
+            elif shape == "snow" and rng.random() < 0.4:
+                glyph = f'<circle r="{1.5 * scale + 0.8:.1f}" fill="{color}"/>'
+            else:
+                glyph = (f'<g><animateTransform attributeName="transform" type="rotate" values="0;{rng.choice((540, -540))}" '
+                         f'dur="{dur:.1f}s" begin="{begin:.2f}s" fill="freeze"/>'
+                         f'<use href="#{shape}" style="color:{color}" transform="scale({scale:.2f})"/></g>')
+            out.append(
+                f'<g transform="translate(-100 -100)"><animateTransform attributeName="transform" type="translate" '
+                f'values="-40 {y:.0f}; {w * .45:.0f} {y + lift:.0f}; {w + 40} {y + lift / 2:.0f}" dur="{dur:.1f}s" '
+                f'begin="{begin:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;.5;1" keySplines=".3 0 .7 1;.3 0 .7 1"/>'
+                f'{glyph}</g>'
+            )
+        return "\n    ".join(out)
     for _ in range(count):
         dur = rng.uniform(9, 18) if mode == "fall" else rng.uniform(14, 26)
         begin = -rng.uniform(0, dur)  # negative begin: already mid-flight on load
@@ -200,9 +224,9 @@ def header(cfg, season):
     w, h = 1200, 340
     rng = random.Random(f"{season}-header")
     style = ANIM_CSS + f"""
-    .name {{ font: 800 92px {SANS}; letter-spacing: -2px; opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .2s forwards; }}
-    .sub {{ font: 500 24px {SANS}; fill: #c9d1d9; letter-spacing: 6px; opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .7s forwards; }}
-    .prompt {{ font: 500 18px {MONO}; fill: #8b949e; opacity: 0; animation: rise 1s ease 1.2s forwards; }}
+    .name {{ font: 800 92px {SANS}; letter-spacing: -2px; }}
+    .sub {{ font: 500 24px {SANS}; fill: #c9d1d9; letter-spacing: 6px; }}
+    .prompt {{ font: 500 18px {MONO}; fill: #8b949e; opacity: 0; animation: rise 1s ease 2.6s forwards; }}
     .tag {{ font: 500 13px {MONO}; fill: #8b949e; opacity: .8; }}
     .accent {{ fill: #00E5FF }} .accent2 {{ fill: #a78bfa }}
     .scan {{ animation: scan 4s ease-in-out infinite; }}
@@ -218,8 +242,12 @@ def header(cfg, season):
     <rect width="{w}" height="{h}" fill="url(#grid)"/>
     {blobs(w, h)}
     {particles(cfg, rng, w, h, 28)}
-    <text class="name" x="600" y="160" text-anchor="middle" fill="url(#name)">Aman Singh</text>
-    <text class="sub" x="600" y="210" text-anchor="middle">SOFTWARE ENGINEER · BUILDER · TINKERER</text>
+    {particles(cfg, random.Random(f"{season}-gust"), w, h, 22, mode="gust", smin=.7, smax=1.4)}
+    <text class="name" x="600" y="160" text-anchor="middle" fill="url(#name)">{drop_letters("Aman Singh", 160, start=.25)}</text>
+    <clipPath id="typed"><rect x="190" y="180" width="0" height="40">
+      <animate attributeName="width" dur="1.3s" begin="1.2s" fill="freeze" calcMode="discrete" values="{';'.join(str(int(820 * i / 38)) for i in range(39))}"/>
+    </rect></clipPath>
+    <text class="sub" x="600" y="210" text-anchor="middle" clip-path="url(#typed)">SOFTWARE ENGINEER · BUILDER · TINKERER</text>
     <rect x="450" y="232" width="300" height="2" fill="url(#edge)" class="scan"/>
     <text class="prompt" x="600" y="280" text-anchor="middle"><tspan class="accent2">aman@github</tspan>:<tspan class="accent">~</tspan>$ building something new<tspan class="cursor">▍</tspan></text>
     <text class="tag" x="1176" y="322" text-anchor="end">{cfg["tag"]}</text>
@@ -319,6 +347,272 @@ def terminal(cfg, season):
     return svg(w, h, "whoami terminal", defs, style, body, rx=14, border=False)
 
 
+# ---------------------------------------------------------------- entrance / data helpers
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def drop_letters(text, y, start=0.2, step=0.07, fall=0.8, frames=60):
+    """Each letter falls into place one after another.
+
+    Absolute y on a tspan starts a new text chunk (breaks centering), so we
+    animate relative dy instead: dy_i(t) = offset_i(t) - offset_{i-1}(t),
+    sampled on one shared timeline so every letter moves independently.
+    """
+    keys = [(0, -70), (.6, 8), (.8, -3), (1, 0)]
+
+    def offset(t, s):
+        if t <= s:
+            return -70.0
+        p = (t - s) / fall
+        if p >= 1:
+            return 0.0
+        for (k0, v0), (k1, v1) in zip(keys, keys[1:]):
+            if k0 <= p <= k1:
+                return v0 + (v1 - v0) * (p - k0) / (k1 - k0)
+        return 0.0
+
+    starts = {i: start + i * step for i, ch in enumerate(text) if ch != " "}
+    total = max(starts.values()) + fall
+    times = [total * f / frames for f in range(frames + 1)]
+    out, prev = [], None
+    for i, ch in enumerate(text):
+        if ch == " ":
+            out.append(" ")
+            continue
+        s = starts[i]
+        dys = [offset(t, s) - (offset(t, starts[prev]) if prev is not None else 0) for t in times]
+        out.append(
+            f'<tspan dy="{dys[0]:.1f}" fill-opacity="0">{ch}'
+            f'<animate attributeName="dy" values="{";".join(f"{d:.1f}" for d in dys)}" dur="{total:.2f}s" fill="freeze"/>'
+            f'<animate attributeName="fill-opacity" values="0;1" dur=".35s" begin="{s:.2f}s" fill="freeze"/></tspan>'
+        )
+        prev = i
+    return "".join(out)
+
+
+def odometer(uid, value, x, y, size, color, begin=0.3, anchor="middle"):
+    """Digits roll up like an odometer and settle on `value`."""
+    s = f"{value:,}"
+    dw, lh = size * 0.62, size * 1.15
+    width = len(s) * dw
+    x0 = x - width / 2 if anchor == "middle" else x
+    parts = [f'<clipPath id="od{uid}"><rect x="{x0 - 4:.1f}" y="{y - size * 0.95:.1f}" width="{width + 8:.1f}" height="{size * 1.2:.1f}"/></clipPath>',
+             f'<g clip-path="url(#od{uid})" fill="{color}" style="font: 800 {size}px {SANS}" text-anchor="middle">']
+    for i, ch in enumerate(s):
+        cx = x0 + dw * (i + 0.5)
+        if not ch.isdigit():
+            parts.append(f'<text x="{cx:.1f}" y="{y}">{ch}</text>')
+            continue
+        d = int(ch)
+        stack = "".join(f'<text x="{cx:.1f}" y="{y + k * lh:.1f}">{k % 10}</text>' for k in range(20))
+        end = -(10 + d) * lh
+        b = begin + (len(s) - i) * 0.08
+        parts.append(
+            f'<g transform="translate(0 0)">{stack}'
+            f'<animateTransform attributeName="transform" type="translate" values="0 0;0 {end:.1f}" dur="1.6s" begin="{b:.2f}s" '
+            f'fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".15 .8 .25 1"/></g>'
+        )
+    parts.append("</g>")
+    return "".join(parts)
+
+
+def load_stats():
+    path = os.path.join(HERE, "..", "data", "stats.json")
+    try:
+        with open(path) as f:
+            return __import__("json").load(f)
+    except FileNotFoundError:
+        return None
+
+
+def card_bg(cfg, rng, w, h, n_particles, strength=.7):
+    return f"""<rect width="{w}" height="{h}" fill="url(#bg)"/>
+    <rect width="{w}" height="{h}" fill="url(#grid)"/>
+    {blobs(w, h, strength)}
+    {particles(cfg, rng, w, h, n_particles, smin=.45, smax=.9, omin=.3, omax=.6)}"""
+
+
+def stats_card(cfg, season, st):
+    w, h = 1200, 400
+    rng = random.Random(f"{season}-stats")
+    t1, _, t3 = cfg["title"]
+    tiles = [
+        ("Contributions", st["contributions"], "past year"),
+        ("Commits", st["commits"], "past year"),
+        ("Repos", st["repos"], "contributed to"),
+        ("Current streak", st["current_streak"], f"longest {st['longest_streak']} days"),
+        ("Pull requests", st["prs"], "past year"),
+        ("Profile views", st["views"] or 0, "and counting"),
+    ]
+    tw, th, gx, gy, ox, oy = 205, 135, 18, 18, 36, 98
+    body = []
+    for i, (label, val, sub) in enumerate(tiles):
+        col, row = i % 3, i // 3
+        x, y = ox + col * (tw + gx), oy + row * (th + gy)
+        d = 0.15 + i * 0.12
+        body.append(f"""<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".5s" begin="{d:.2f}s" fill="freeze"/>
+      <rect x="{x}" y="{y}" width="{tw}" height="{th}" rx="14" fill="#0d1117" fill-opacity=".72" stroke="url(#edge)" stroke-opacity=".9"/>
+      <text x="{x + tw / 2}" y="{y + 30}" text-anchor="middle" class="lbl">{label.upper()}</text>
+      {odometer(f"s{i}", val, x + tw / 2, y + 86, 44, "url(#title)", begin=d + .2)}
+      <text x="{x + tw / 2}" y="{y + 115}" text-anchor="middle" class="sub">{sub}</text></g>""")
+
+    # weekly contributions sparkline that draws itself
+    wk = st["weekly"] or [0]
+    sx, sy, sw, sh = 720, 120, 440, 220
+    mx = max(wk) or 1
+    pts = [(sx + sw * i / max(len(wk) - 1, 1), sy + sh - sh * v / mx) for i, v in enumerate(wk)]
+    line = "M" + " L".join(f"{px:.1f} {py:.1f}" for px, py in pts)
+    length = sum(((pts[i][0] - pts[i - 1][0]) ** 2 + (pts[i][1] - pts[i - 1][1]) ** 2) ** .5 for i in range(1, len(pts)))
+    area = line + f" L{sx + sw} {sy + sh} L{sx} {sy + sh}Z"
+    peak_i = max(range(len(wk)), key=lambda i: wk[i])
+    px, py = pts[peak_i]
+    body.append(f"""<text x="{sx}" y="{sy - 22}" class="lbl" text-anchor="start">WEEKLY CONTRIBUTIONS · LAST 12 MONTHS</text>
+    <line x1="{sx}" y1="{sy + sh}" x2="{sx + sw}" y2="{sy + sh}" stroke="#30363d"/>
+    <path d="{area}" fill="url(#areaFill)" opacity="0"><animate attributeName="opacity" values="0;1" dur="1s" begin="2.2s" fill="freeze"/></path>
+    <path d="{line}" fill="none" stroke="url(#title)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
+          stroke-dasharray="{length:.0f}" stroke-dashoffset="{length:.0f}">
+      <animate attributeName="stroke-dashoffset" values="{length:.0f};0" dur="2.2s" begin=".4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .2 1"/></path>
+    <g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="2.6s" fill="freeze"/>
+      <circle cx="{px:.1f}" cy="{py:.1f}" r="6" fill="{t3}"><animate attributeName="r" values="5;9;5" dur="1.6s" repeatCount="indefinite"/></circle>
+      <text x="{px - 14:.1f}" y="{py + 5:.1f}" text-anchor="end" class="sub">peak {wk[peak_i]}/wk</text></g>""")
+
+    style = f"""
+    .h {{ font: 800 28px {SANS}; }}
+    .lbl {{ font: 600 12px {MONO}; fill: #8b949e; letter-spacing: 2px; }}
+    .sub {{ font: 500 13px {MONO}; fill: #8b949e; }}"""
+    defs = common_defs(cfg, w, h, 22) + f"""
+    <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="{t3}" stop-opacity=".35"/><stop offset="1" stop-color="{t3}" stop-opacity="0"/>
+    </linearGradient>"""
+    content = f"""<g clip-path="url(#card)">
+    {card_bg(cfg, rng, w, h, 10)}
+    <text x="36" y="58" class="h" fill="url(#title)">This year on GitHub</text>
+    <text x="{w - 36}" y="58" class="sub" text-anchor="end">updated {st['updated']}</text>
+    {"".join(body)}
+  </g>"""
+    return svg(w, h, "GitHub stats", defs, style, content)
+
+
+def languages_card(cfg, season, st):
+    langs = st["languages"][:6]
+    w = 1200
+    h = 110 + 46 * len(langs)
+    rng = random.Random(f"{season}-langs")
+    top = max((l["pct"] for l in langs), default=1) or 1
+    bx, bw = 250, 760
+    rows = []
+    for i, l in enumerate(langs):
+        y = 100 + i * 46
+        d = 0.3 + i * 0.15
+        full = bw * l["pct"] / top
+        rows.append(f"""<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="{d:.2f}s" fill="freeze"/>
+      <circle cx="56" cy="{y - 6}" r="7" fill="{l['color']}"/>
+      <text x="74" y="{y}" class="n">{l['name']}</text>
+      <rect x="{bx}" y="{y - 16}" width="{bw}" height="18" rx="9" fill="#ffffff" fill-opacity=".06"/>
+      <rect x="{bx}" y="{y - 16}" width="0" height="18" rx="9" fill="{l['color']}">
+        <animate attributeName="width" values="0;{full:.1f}" dur="1.2s" begin="{d + .1:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect>
+      <text x="{bx + bw + 24}" y="{y}" class="p">{l['pct']:.1f}%</text></g>""")
+    style = f"""
+    .h {{ font: 800 28px {SANS}; }}
+    .n {{ font: 600 17px {SANS}; fill: #e6edf3; }}
+    .p {{ font: 700 16px {MONO}; fill: #c9d1d9; }}
+    .sub {{ font: 500 13px {MONO}; fill: #8b949e; }}"""
+    content = f"""<g clip-path="url(#card)">
+    {card_bg(cfg, rng, w, h, 6, .55)}
+    <text x="36" y="56" class="h" fill="url(#title)">Languages I commit in</text>
+    <text x="{w - 36}" y="56" class="sub" text-anchor="end">weighted by commits · incl. private repos</text>
+    {"".join(rows)}
+  </g>"""
+    return svg(w, h, "Languages", common_defs(cfg, w, h, 22), style, content)
+
+
+ORBITS = [
+    (110, 34, ["python", "typescript", "django", "postgres", "aws", "docker"]),
+    (185, -50, ["javascript", "bash", "nodejs", "redis", "kubernetes", "terraform", "prometheus", "grafana"]),
+    (260, 70, ["cpp", "mysql", "rabbitmq", "kafka", "linux", "nginx", "sentry", "elasticsearch", "git", "githubactions"]),
+]
+
+
+def icon_uri(name):
+    import base64
+    with open(os.path.join(HERE, "icons", f"{name}.svg"), "rb") as f:
+        return "data:image/svg+xml;base64," + base64.b64encode(f.read()).decode()
+
+
+def orbit_card(cfg, season):
+    w, h = 1200, 620
+    cx, cy = w / 2, h / 2
+    rng = random.Random(f"{season}-orbit")
+    t1, t2, t3 = cfg["title"]
+    rings = []
+    n = 0
+    for r, period, icons in ORBITS:
+        direction = 1 if period > 0 else -1
+        period = abs(period)
+        items = []
+        for k, name in enumerate(icons):
+            a = 2 * 3.14159265 * k / len(icons) + r
+            x, y = cx + r * __import__("math").cos(a), cy + r * __import__("math").sin(a)
+            b = 0.3 + n * 0.06
+            n += 1
+            items.append(f"""<g transform="translate({x:.1f} {y:.1f})"><g transform="scale(0)">
+          <animateTransform attributeName="transform" type="scale" values="0;1.25;1" keyTimes="0;.7;1" dur=".6s" begin="{b:.2f}s" fill="freeze"/>
+          <g><animateTransform attributeName="transform" type="rotate" values="0;{-360 * direction}" dur="{period}s" repeatCount="indefinite"/>
+            <image href="{icon_uri(name)}" x="-24" y="-24" width="48" height="48"/></g></g></g>""")
+        rings.append(f"""<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="url(#edge)" stroke-opacity=".55" stroke-dasharray="3 7"/>
+      <g><animateTransform attributeName="transform" type="rotate" values="0 {cx} {cy};{360 * direction} {cx} {cy}" dur="{period}s" repeatCount="indefinite"/>
+        {"".join(items)}</g>""")
+    style = f"""
+    .core {{ font: 800 34px {SANS}; }}
+    .sub {{ font: 500 13px {MONO}; fill: #8b949e; }}"""
+    defs = common_defs(cfg, w, h, 22) + f"""
+    <radialGradient id="core"><stop offset="0" stop-color="{t3}" stop-opacity=".9"/><stop offset=".45" stop-color="{t1}" stop-opacity=".35"/><stop offset="1" stop-color="{t1}" stop-opacity="0"/></radialGradient>"""
+    content = f"""<g clip-path="url(#card)">
+    {card_bg(cfg, rng, w, h, 14, .6)}
+    <circle cx="{cx}" cy="{cy}" r="70" fill="url(#core)"><animate attributeName="r" values="60;78;60" dur="4s" repeatCount="indefinite"/></circle>
+    <circle cx="{cx}" cy="{cy}" r="40" fill="#0d1117" stroke="url(#edge)" stroke-width="2"/>
+    <text x="{cx}" y="{cy + 12}" text-anchor="middle" class="core" fill="url(#title)">&lt;/&gt;</text>
+    {"".join(rings)}
+    <text x="{w - 30}" y="{h - 24}" text-anchor="end" class="sub">{cfg["tag"]} · my toolbox in orbit</text>
+  </g>"""
+    return svg(w, h, "Tech stack", defs, style, content)
+
+
+HIGHLIGHTS = [
+    ("🏆", "Innohacks", "Winner · 100+ teams"),
+    ("🔬", "IIT Bombay", "Research"),
+    ("🎖️", "Delhi Govt.", "Excellence in Education"),
+    ("📚", "Chegg", "Subject Matter Expert"),
+]
+
+
+def highlights_card(cfg, season):
+    w, h = 1200, 230
+    rng = random.Random(f"{season}-highlights")
+    pw, ph = 540, 76
+    pills = []
+    for i, (emoji, title, sub) in enumerate(HIGHLIGHTS):
+        col, row = i % 2, i // 2
+        px = 600 + (col - 0.5) * (pw + 30)
+        py = 70 + row * (ph + 18) + ph / 2 - 10
+        b = 0.3 + i * 0.22
+        pills.append(f"""<g transform="translate({px:.0f} {py:.0f})"><g transform="scale(0)">
+        <animateTransform attributeName="transform" type="scale" values="0;1.12;.96;1" keyTimes="0;.55;.8;1" dur=".7s" begin="{b:.2f}s" fill="freeze"/>
+        <rect x="{-pw / 2}" y="{-ph / 2}" width="{pw}" height="{ph}" rx="{ph / 2}" fill="#0d1117" fill-opacity=".8" stroke="url(#edge)" stroke-width="1.5"/>
+        <text x="{-pw / 2 + 46}" y="11" text-anchor="middle" style="font-size:30px">{emoji}</text>
+        <text x="{-pw / 2 + 86}" y="-4" class="t" fill="url(#title)">{title}</text>
+        <text x="{-pw / 2 + 86}" y="20" class="s">{sub}</text></g></g>""")
+    style = f"""
+    .t {{ font: 800 22px {SANS}; }}
+    .s {{ font: 500 15px {MONO}; fill: #c9d1d9; }}"""
+    content = f"""<g clip-path="url(#card)">
+    {card_bg(cfg, rng, w, h, 8, .5)}
+    {"".join(pills)}
+  </g>"""
+    return svg(w, h, "Highlights", common_defs(cfg, w, h, 22), style, content)
+
+
 SECTIONS = {
     "toolbox": "Toolbox",
     "highlights": "Highlights",
@@ -336,6 +630,12 @@ def build_all(season):
     }
     for key, title in SECTIONS.items():
         files[f"section-{key}.svg"] = section(cfg, season, key, title)
+    files["orbit.svg"] = orbit_card(cfg, season)
+    files["highlights.svg"] = highlights_card(cfg, season)
+    st = load_stats()
+    if st:
+        files["stats.svg"] = stats_card(cfg, season, st)
+        files["languages.svg"] = languages_card(cfg, season, st)
     return files
 
 
@@ -343,7 +643,9 @@ if __name__ == "__main__":
     season = os.environ.get("SEASON") or season_for(datetime.date.today())
     out_dir = sys.argv[1] if len(sys.argv) > 1 else "assets"
     os.makedirs(out_dir, exist_ok=True)
-    for name, content in build_all(season).items():
+    files = build_all(season)
+    n = len(files)
+    for name, content in files.items():
         with open(os.path.join(out_dir, name), "w", encoding="utf-8") as f:
             f.write(content)
-    print(f"wrote {len(SECTIONS) + 4} files to {out_dir} ({season})")
+    print(f"wrote {n} files to {out_dir} ({season})")

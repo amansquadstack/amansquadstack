@@ -1,0 +1,28 @@
+name: Space Shooter
+
+on:
+  schedule:
+    - cron: "30 1 * * *" # daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-push
+  cancel-in-progress: false
+
+jobs:
+  game:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: czl9707/gh-space-shooter@v2.0.5
+        with:
+          github-token: ${{ secrets.MY_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          output-path: assets/space-shooter.gif
+          strategy: random
+          no-amend: "true"
+          commit-message: "chore: update space shooter"

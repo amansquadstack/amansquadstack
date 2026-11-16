@@ -19,20 +19,13 @@
 
 <img src="./assets/section-toolbox.svg" width="100%" alt="Toolbox"/>
 
-<img src="https://skillicons.dev/icons?i=python,typescript,javascript,cpp,bash,mysql&theme=dark" /><br/>
-<img src="https://skillicons.dev/icons?i=django,nodejs,postgres,redis,rabbitmq,kafka&theme=dark" /><br/>
-<img src="https://skillicons.dev/icons?i=aws,kubernetes,docker,terraform,linux,nginx&theme=dark" /><br/>
-<img src="https://skillicons.dev/icons?i=prometheus,grafana,sentry,elasticsearch,git,githubactions&theme=dark" />
+<img src="./assets/orbit.svg" width="100%" alt="Tech stack: Python, TypeScript, Django, AWS, Kubernetes, Terraform and more"/>
 
 <img src="./assets/divider.svg" width="100%"/>
 
 <img src="./assets/section-highlights.svg" width="100%" alt="Highlights"/>
 
-<img src="https://img.shields.io/badge/🏆_Innohacks-Winner_·_100%2B_teams-7C3AED?style=for-the-badge&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/🔬_IIT_Bombay-Research-00B8D4?style=for-the-badge&labelColor=0d1117"/>
-<br/>
-<img src="https://img.shields.io/badge/🎖️_Delhi_Govt.-Excellence_in_Education-FF4FA3?style=for-the-badge&labelColor=0d1117"/>
-<img src="https://img.shields.io/badge/📚_Chegg-SME-F2CC60?style=for-the-badge&labelColor=0d1117"/>
+<img src="./assets/highlights.svg" width="100%" alt="Innohacks winner · IIT Bombay research · Delhi Govt. Excellence in Education · Chegg SME"/>
 
 <img src="./assets/divider.svg" width="100%"/>
 
@@ -46,10 +39,11 @@
 
 <br/><br/>
 
-<img src="https://streak-stats.demolab.com?user=amansquadstack&hide_border=true&background=0d1117&stroke=7C3AED&ring=00E5FF&fire=FF4FA3&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=00E5FF&sideLabels=a78bfa&dates=8B949E" width="49%" />
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=amansquadstack&theme=tokyonight" width="49%" />
+<img src="./assets/stats.svg" width="100%" alt="GitHub stats"/>
 
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=amansquadstack&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=a78bfa&line=00E5FF&point=FF4FA3&area=true&area_color=7C3AED&radius=12" width="100%" />
+<img src="./assets/languages.svg" width="100%" alt="Languages"/>
+
+<img src="./assets/space-shooter.gif" width="100%" alt="Space shooter playing my contribution graph"/>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amansquadstack/amansquadstack/output/github-contribution-grid-snake-dark.svg" />
