@@ -265,23 +265,6 @@ def divider(cfg, season):
     return svg(w, h, "divider", common_defs(cfg, w, h, 0), "", body, border=False)
 
 
-def section(cfg, season, key, title):
-    w, h = 1200, 84
-    rng = random.Random(f"{season}-{key}")
-    style = f"""
-    .t {{ font: 800 34px {SANS}; letter-spacing: 1px; opacity: 0; animation: rise .9s cubic-bezier(.2,.8,.2,1) .1s forwards; }}
-    @keyframes rise {{ from {{ opacity: 0; transform: translateY(10px) }} to {{ opacity: 1; transform: translateY(0) }} }}"""
-    body = f"""<g clip-path="url(#card)">
-    <rect width="{w}" height="{h}" fill="url(#bg)"/>
-    <rect width="{w}" height="{h}" fill="url(#grid)"/>
-    {blobs(w, h, .6)}
-    {particles(cfg, rng, w, h, 9, smin=.45, smax=.85, omin=.4, omax=.75)}
-    <text class="t" x="{w / 2:.0f}" y="54" text-anchor="middle" fill="url(#title)">{title}</text>
-    <rect x="{w / 2 - 120:.0f}" y="68" width="240" height="2" rx="1" fill="url(#edge)"/>
-  </g>"""
-    return svg(w, h, title, common_defs(cfg, w, h, 16), style, body, rx=16)
-
-
 def footer(cfg, season):
     w, h = 1200, 170
     rng = random.Random(f"{season}-footer")
@@ -393,30 +376,79 @@ def drop_letters(text, y, start=0.2, step=0.07, fall=0.8, frames=60):
     return "".join(out)
 
 
-def odometer(uid, value, x, y, size, color, begin=0.3, anchor="middle"):
-    """Digits roll up like an odometer and settle on `value`."""
+# ---------------------------------------------------------------- bento design system
+# Data cards stay quiet: flat warm surface, 1px hairline, no glows/particles,
+# ink-coloured text, ONE accent for the single data series.
+INK, INK2, MUTED, FAINT = "#ece4d4", "#b9b0a2", "#8a8274", "#5c564d"
+SURFACE, LINE = "#161512", "#ece4d4"
+
+
+def bento_defs():
+    return """
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ece4d4" stop-opacity=".045"/><stop offset=".45" stop-color="#ece4d4" stop-opacity="0"/>
+    </linearGradient>"""
+
+
+BENTO_CSS = f"""
+    .lbl {{ font: 500 11px {MONO}; fill: {MUTED}; letter-spacing: 1.6px; }}
+    .sub {{ font: 400 13px {SANS}; fill: {MUTED}; }}
+    .tick {{ font: 400 11px {MONO}; fill: {FAINT}; }}
+    .h2 {{ font: 600 15px {SANS}; fill: {INK}; letter-spacing: -.1px; }}"""
+
+
+def tile(x, y, w, h, r=18, delay=None):
+    """A bento tile; optional fade-up entrance."""
+    rect = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}" fill="{SURFACE}"/>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}" fill="url(#sheen)"/>'
+            f'<rect x="{x + .5}" y="{y + .5}" width="{w - 1}" height="{h - 1}" rx="{r}" fill="none" stroke="{LINE}" stroke-opacity=".09"/>')
+    return rect
+
+
+def enter(delay, body):
+    """Fade + 10px rise, played once."""
+    return (f'<g opacity="0" transform="translate(0 10)">'
+            f'<animate attributeName="opacity" values="0;1" dur=".6s" begin="{delay:.2f}s" fill="freeze"/>'
+            f'<animateTransform attributeName="transform" type="translate" values="0 10;0 0" dur=".7s" begin="{delay:.2f}s" '
+            f'fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/>{body}</g>')
+
+
+def odometer(uid, value, x, y, size, color, begin=0.3, anchor="start", weight=600):
+    """Digits roll like an odometer and settle on `value` (proportional-ish spacing)."""
     s = f"{value:,}"
-    dw, lh = size * 0.62, size * 1.15
-    width = len(s) * dw
+    widths = [size * (0.27 if c == "," else 0.6) for c in s]
+    width = sum(widths)
     x0 = x - width / 2 if anchor == "middle" else x
-    parts = [f'<clipPath id="od{uid}"><rect x="{x0 - 4:.1f}" y="{y - size * 0.95:.1f}" width="{width + 8:.1f}" height="{size * 1.2:.1f}"/></clipPath>',
-             f'<g clip-path="url(#od{uid})" fill="{color}" style="font: 800 {size}px {SANS}" text-anchor="middle">']
+    lh = size * 1.2
+    parts = [f'<clipPath id="od{uid}"><rect x="{x0 - 4:.1f}" y="{y - size * 0.92:.1f}" width="{width + 8:.1f}" height="{size * 1.14:.1f}"/></clipPath>',
+             f'<g clip-path="url(#od{uid})" fill="{color}" style="font: {weight} {size}px {SANS}; letter-spacing: -.02em" text-anchor="middle">']
+    cx = x0
     for i, ch in enumerate(s):
-        cx = x0 + dw * (i + 0.5)
+        mid = cx + widths[i] / 2
+        cx += widths[i]
         if not ch.isdigit():
-            parts.append(f'<text x="{cx:.1f}" y="{y}">{ch}</text>')
+            parts.append(f'<text x="{mid:.1f}" y="{y}">{ch}</text>')
             continue
         d = int(ch)
-        stack = "".join(f'<text x="{cx:.1f}" y="{y + k * lh:.1f}">{k % 10}</text>' for k in range(20))
-        end = -(10 + d) * lh
-        b = begin + (len(s) - i) * 0.08
+        stack = "".join(f'<text x="{mid:.1f}" y="{y + k * lh:.1f}">{k % 10}</text>' for k in range(20))
+        b = begin + (len(s) - i) * 0.07
         parts.append(
-            f'<g transform="translate(0 0)">{stack}'
-            f'<animateTransform attributeName="transform" type="translate" values="0 0;0 {end:.1f}" dur="1.6s" begin="{b:.2f}s" '
-            f'fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".15 .8 .25 1"/></g>'
-        )
+            f'<g>{stack}<animateTransform attributeName="transform" type="translate" values="0 0;0 {-(10 + d) * lh:.1f}" '
+            f'dur="1.5s" begin="{b:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".15 .8 .25 1"/></g>')
     parts.append("</g>")
     return "".join(parts)
+
+
+def section(cfg, season, key, title):
+    """Quiet section label: index + title + hairline. Dark tile so it reads in light mode too."""
+    w, h = 1200, 64
+    idx = {"toolbox": "01", "highlights": "02", "motion": "03"}.get(key, "")
+    acc = cfg["title"][2]
+    body = f"""{tile(0, 0, w, h, 16)}
+  {enter(.05, f'''<text x="28" y="39" style="font: 500 12px {MONO}; letter-spacing: 1.5px" fill="{acc}">{idx}</text>
+    <text x="60" y="40" style="font: 600 20px {SANS}; letter-spacing: -.2px" fill="{INK}">{title}</text>
+    <rect x="{60 + len(title) * 11 + 24:.0f}" y="32" width="{w - (60 + len(title) * 11 + 24) - 28:.0f}" height="1" fill="{LINE}" fill-opacity=".09"/>''')}"""
+    return svg(w, h, title, bento_defs(), "", body, border=False)
 
 
 def load_stats():
@@ -428,107 +460,107 @@ def load_stats():
         return None
 
 
-def card_bg(cfg, rng, w, h, n_particles, strength=.7):
-    return f"""<rect width="{w}" height="{h}" fill="url(#bg)"/>
-    <rect width="{w}" height="{h}" fill="url(#grid)"/>
-    {blobs(w, h, strength)}
-    {particles(cfg, rng, w, h, n_particles, smin=.45, smax=.9, omin=.3, omax=.6)}"""
+def month_ticks(updated, n):
+    end = datetime.date.fromisoformat(updated)
+    ticks, last = [], None
+    for i in range(n):
+        d = end - datetime.timedelta(days=7 * (n - 1 - i))
+        if d.month != last:
+            if last is not None and d.month % 3 == 1:
+                ticks.append((i, d.strftime("%b")))
+            last = d.month
+    return ticks
 
 
 def stats_card(cfg, season, st):
-    w, h = 1200, 400
-    rng = random.Random(f"{season}-stats")
-    t1, _, t3 = cfg["title"]
-    tiles = [
-        ("Contributions", st["contributions"], "past year"),
-        ("Commits", st["commits"], "past year"),
-        ("Repos", st["repos"], "contributed to"),
-        ("Current streak", st["current_streak"], f"longest {st['longest_streak']} days"),
-        ("Pull requests", st["prs"], "past year"),
-        ("Profile views", st["views"] or 0, "and counting"),
-    ]
-    tw, th, gx, gy, ox, oy = 205, 135, 18, 18, 36, 98
-    body = []
-    for i, (label, val, sub) in enumerate(tiles):
-        col, row = i % 3, i // 3
-        x, y = ox + col * (tw + gx), oy + row * (th + gy)
-        d = 0.15 + i * 0.12
-        body.append(f"""<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".5s" begin="{d:.2f}s" fill="freeze"/>
-      <rect x="{x}" y="{y}" width="{tw}" height="{th}" rx="14" fill="#13120f" fill-opacity=".72" stroke="url(#edge)" stroke-opacity=".9"/>
-      <text x="{x + tw / 2}" y="{y + 30}" text-anchor="middle" class="lbl">{label.upper()}</text>
-      {odometer(f"s{i}", val, x + tw / 2, y + 86, 44, "url(#title)", begin=d + .2)}
-      <text x="{x + tw / 2}" y="{y + 115}" text-anchor="middle" class="sub">{sub}</text></g>""")
+    """Bento: hero tile (contributions + area chart) + 6 small stat tiles."""
+    acc = cfg["title"][2]
+    w, h, g = 1200, 452, 14
+    hw = 700
+    sw = (w - hw - g * 2) / 2
+    sh = (h - g * 2) / 3
+    parts = [enter(.05, tile(0, 0, hw, h))]
 
-    # weekly contributions sparkline that draws itself
+    # hero
     wk = st["weekly"] or [0]
-    sx, sy, sw, sh = 720, 120, 440, 220
+    px0, px1, py0, py1 = 32, hw - 32, 210, h - 52
     mx = max(wk) or 1
-    pts = [(sx + sw * i / max(len(wk) - 1, 1), sy + sh - sh * v / mx) for i, v in enumerate(wk)]
-    line = "M" + " L".join(f"{px:.1f} {py:.1f}" for px, py in pts)
+    pts = [(px0 + (px1 - px0) * i / max(len(wk) - 1, 1), py1 - (py1 - py0) * v / mx) for i, v in enumerate(wk)]
+    line = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in pts)
     length = sum(((pts[i][0] - pts[i - 1][0]) ** 2 + (pts[i][1] - pts[i - 1][1]) ** 2) ** .5 for i in range(1, len(pts)))
-    area = line + f" L{sx + sw} {sy + sh} L{sx} {sy + sh}Z"
-    peak_i = max(range(len(wk)), key=lambda i: wk[i])
-    px, py = pts[peak_i]
-    body.append(f"""<text x="{sx}" y="{sy - 22}" class="lbl" text-anchor="start">WEEKLY CONTRIBUTIONS · LAST 12 MONTHS</text>
-    <line x1="{sx}" y1="{sy + sh}" x2="{sx + sw}" y2="{sy + sh}" stroke="#2e2a24"/>
-    <path d="{area}" fill="url(#areaFill)" opacity="0"><animate attributeName="opacity" values="0;1" dur="1s" begin="2.2s" fill="freeze"/></path>
-    <path d="{line}" fill="none" stroke="url(#title)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
+    area = line + f" L{px1} {py1} L{px0} {py1}Z"
+    pk = max(range(len(wk)), key=lambda i: wk[i])
+    kx, ky = pts[pk]
+    ticks = "".join(f'<text x="{pts[i][0]:.1f}" y="{py1 + 26}" class="tick" text-anchor="middle">{m}</text>'
+                    f'<rect x="{pts[i][0]:.1f}" y="{py1}" width="1" height="5" fill="{LINE}" fill-opacity=".18"/>'
+                    for i, m in month_ticks(st["updated"], len(wk)))
+    grid = "".join(f'<rect x="{px0}" y="{py1 - (py1 - py0) * f:.1f}" width="{px1 - px0}" height="1" fill="{LINE}" fill-opacity=".05"/>'
+                   for f in (.5, 1))
+    parts.append(enter(.15, f"""
+    <text x="32" y="48" class="lbl">CONTRIBUTIONS · LAST 12 MONTHS</text>
+    {odometer("hero", st["contributions"], 30, 128, 76, INK, begin=.3)}
+    <text x="34" y="164" class="sub">across {st["repos"]} repositories · busiest week: {wk[pk]} contributions</text>
+    {grid}
+    <rect x="{px0}" y="{py1}" width="{px1 - px0}" height="1" fill="{LINE}" fill-opacity=".14"/>
+    {ticks}
+    <path d="{area}" fill="url(#heroFill)" opacity="0"><animate attributeName="opacity" values="0;1" dur="1s" begin="2.1s" fill="freeze"/></path>
+    <path d="{line}" fill="none" stroke="{acc}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
           stroke-dasharray="{length:.0f}" stroke-dashoffset="{length:.0f}">
-      <animate attributeName="stroke-dashoffset" values="{length:.0f};0" dur="2.2s" begin=".4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .2 1"/></path>
-    <g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="2.6s" fill="freeze"/>
-      <circle cx="{px:.1f}" cy="{py:.1f}" r="6" fill="{t3}"><animate attributeName="r" values="5;9;5" dur="1.6s" repeatCount="indefinite"/></circle>
-      <text x="{px - 14:.1f}" y="{py + 5:.1f}" text-anchor="end" class="sub">peak {wk[peak_i]}/wk</text></g>""")
+      <animate attributeName="stroke-dashoffset" values="{length:.0f};0" dur="2s" begin=".5s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".4 0 .2 1"/></path>
+    <g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="2.4s" fill="freeze"/>
+      <circle cx="{kx:.1f}" cy="{ky:.1f}" r="6" fill="{acc}" stroke="{SURFACE}" stroke-width="2"/>
+      <text x="{kx - 12:.1f}" y="{ky + 4:.1f}" text-anchor="end" style="font: 600 12px {SANS}" fill="{INK2}">{wk[pk]}</text></g>"""))
 
-    style = f"""
-    .h {{ font: 800 28px {SANS}; }}
-    .lbl {{ font: 600 12px {MONO}; fill: #8f877a; letter-spacing: 2px; }}
-    .sub {{ font: 500 13px {MONO}; fill: #8f877a; }}"""
-    defs = common_defs(cfg, w, h, 22) + f"""
-    <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="{t3}" stop-opacity=".35"/><stop offset="1" stop-color="{t3}" stop-opacity="0"/>
+    small = [
+        ("COMMITS", st["commits"], "past year"),
+        ("PULL REQUESTS", st["prs"], "past year"),
+        ("CURRENT STREAK", st["current_streak"], f"day{'s' if st['current_streak'] != 1 else ''} in a row"),
+        ("REPOS", st["repos"], "contributed to"),
+        ("LONGEST STREAK", st["longest_streak"], "days in a row"),
+        ("PROFILE VIEWS", st["views"] or 0, "and counting"),
+    ]
+    for i, (label, val, sub) in enumerate(small):
+        col, row = i % 2, i // 2
+        x = hw + g + col * (sw + g)
+        y = row * (sh + g)
+        d = .25 + i * .08
+        parts.append(enter(d, f"""{tile(x, y, sw, sh, 16)}
+      <text x="{x + 22}" y="{y + 34}" class="lbl">{label}</text>
+      {odometer(f"t{i}", val, x + 20, y + 88, 40, INK, begin=d + .2)}
+      <text x="{x + 22}" y="{y + sh - 22}" class="sub">{sub}</text>"""))
+
+    defs = bento_defs() + f"""
+    <linearGradient id="heroFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="{acc}" stop-opacity=".22"/><stop offset="1" stop-color="{acc}" stop-opacity="0"/>
     </linearGradient>"""
-    content = f"""<g clip-path="url(#card)">
-    {card_bg(cfg, rng, w, h, 10)}
-    <text x="36" y="58" class="h" fill="url(#title)">This year on GitHub</text>
-    <text x="{w - 36}" y="58" class="sub" text-anchor="end">updated {st['updated']}</text>
-    {"".join(body)}
-  </g>"""
-    return svg(w, h, "GitHub stats", defs, style, content)
+    return svg(w, h, "GitHub stats", defs, BENTO_CSS, "\n  ".join(parts), border=False)
 
 
 def languages_card(cfg, season, st):
+    """Ranked thin bars, one series = one colour; names/values in ink."""
+    acc = cfg["title"][2]
     langs = st["languages"][:6]
     w = 1200
-    h = 110 + 46 * len(langs)
-    rng = random.Random(f"{season}-langs")
+    cols, per = 2, 3
+    rows_h = 52
+    h = 92 + rows_h * per + 18
     top = max((l["pct"] for l in langs), default=1) or 1
-    bx, bw = 250, 760
-    rows = []
+    colw = (w - 64 - 48) / cols
+    parts = [tile(0, 0, w, h), f'<text x="32" y="48" class="lbl">LANGUAGES · SHARE OF COMMITS</text>',
+             f'<text x="{w - 32}" y="48" class="lbl" text-anchor="end">INCL. PRIVATE REPOS</text>']
     for i, l in enumerate(langs):
-        y = 100 + i * 46
-        d = 0.3 + i * 0.15
-        full = bw * l["pct"] / top
-        shade = cfg["title"][2]
-        op = max(1 - i * 0.15, 0.3)
-        rows.append(f"""<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="{d:.2f}s" fill="freeze"/>
-      <circle cx="56" cy="{y - 6}" r="6" fill="{shade}" fill-opacity="{op:.2f}"/>
-      <text x="74" y="{y}" class="n">{l['name']}</text>
-      <rect x="{bx}" y="{y - 16}" width="{bw}" height="18" rx="9" fill="#ece4d4" fill-opacity=".06"/>
-      <rect x="{bx}" y="{y - 16}" width="0" height="18" rx="9" fill="{shade}" fill-opacity="{op:.2f}">
-        <animate attributeName="width" values="0;{full:.1f}" dur="1.2s" begin="{d + .1:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect>
-      <text x="{bx + bw + 24}" y="{y}" class="p">{l['pct']:.1f}%</text></g>""")
-    style = f"""
-    .h {{ font: 800 28px {SANS}; }}
-    .n {{ font: 600 17px {SANS}; fill: #ece4d4; }}
-    .p {{ font: 700 16px {MONO}; fill: #d6ccbb; }}
-    .sub {{ font: 500 13px {MONO}; fill: #8f877a; }}"""
-    content = f"""<g clip-path="url(#card)">
-    {card_bg(cfg, rng, w, h, 6, .55)}
-    <text x="36" y="56" class="h" fill="url(#title)">Languages I commit in</text>
-    <text x="{w - 36}" y="56" class="sub" text-anchor="end">weighted by commits · incl. private repos</text>
-    {"".join(rows)}
-  </g>"""
-    return svg(w, h, "Languages", common_defs(cfg, w, h, 22), style, content)
+        c, r = i // per, i % per
+        x = 32 + c * (colw + 48)
+        y = 92 + r * rows_h
+        d = .2 + i * .1
+        full = (colw) * l["pct"] / top
+        parts.append(enter(d, f"""
+      <text x="{x}" y="{y + 6}" style="font: 500 15px {SANS}" fill="{INK}">{l["name"]}</text>
+      <text x="{x + colw}" y="{y + 6}" text-anchor="end" style="font: 500 13px {MONO}" fill="{INK2}">{l["pct"]:.1f}%</text>
+      <rect x="{x}" y="{y + 18}" width="{colw:.1f}" height="4" rx="2" fill="{LINE}" fill-opacity=".07"/>
+      <rect x="{x}" y="{y + 18}" width="0" height="4" rx="2" fill="{acc}">
+        <animate attributeName="width" values="0;{max(full, 4):.1f}" dur="1.2s" begin="{d + .15:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect>"""))
+    return svg(w, h, "Languages", bento_defs(), BENTO_CSS, "\n  ".join(parts), border=False)
 
 
 ORBITS = [
@@ -545,77 +577,56 @@ def icon_uri(name):
 
 
 def orbit_card(cfg, season):
+    import math
     w, h = 1200, 620
     cx, cy = w / 2, h / 2
-    rng = random.Random(f"{season}-orbit")
-    t1, t2, t3 = cfg["title"]
-    rings = []
-    n = 0
+    acc = cfg["title"][2]
+    rings, n = [], 0
     for r, period, icons in ORBITS:
         direction = 1 if period > 0 else -1
         period = abs(period)
         items = []
         for k, name in enumerate(icons):
-            a = 2 * 3.14159265 * k / len(icons) + r
-            x, y = cx + r * __import__("math").cos(a), cy + r * __import__("math").sin(a)
-            b = 0.3 + n * 0.06
+            a = 2 * math.pi * k / len(icons) + r
+            x, y = cx + r * math.cos(a), cy + r * math.sin(a)
+            b = 0.3 + n * 0.05
             n += 1
             items.append(f"""<g transform="translate({x:.1f} {y:.1f})"><g transform="scale(0)">
-          <animateTransform attributeName="transform" type="scale" values="0;1.25;1" keyTimes="0;.7;1" dur=".6s" begin="{b:.2f}s" fill="freeze"/>
+          <animateTransform attributeName="transform" type="scale" values="0;1.08;1" keyTimes="0;.7;1" dur=".5s" begin="{b:.2f}s" fill="freeze"/>
           <g><animateTransform attributeName="transform" type="rotate" values="0;{-360 * direction}" dur="{period}s" repeatCount="indefinite"/>
-            <image href="{icon_uri(name)}" x="-24" y="-24" width="48" height="48"/></g></g></g>""")
-        rings.append(f"""<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="url(#edge)" stroke-opacity=".55" stroke-dasharray="3 7"/>
+            <image href="{icon_uri(name)}" x="-22" y="-22" width="44" height="44"/></g></g></g>""")
+        rings.append(f"""<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{LINE}" stroke-opacity=".08"/>
       <g><animateTransform attributeName="transform" type="rotate" values="0 {cx} {cy};{360 * direction} {cx} {cy}" dur="{period}s" repeatCount="indefinite"/>
         {"".join(items)}</g>""")
-    style = f"""
-    .core {{ font: 800 34px {SANS}; }}
-    .sub {{ font: 500 13px {MONO}; fill: #8f877a; }}"""
-    defs = common_defs(cfg, w, h, 22) + f"""
-    <radialGradient id="core"><stop offset="0" stop-color="{t3}" stop-opacity=".9"/><stop offset=".45" stop-color="{t1}" stop-opacity=".35"/><stop offset="1" stop-color="{t1}" stop-opacity="0"/></radialGradient>"""
-    content = f"""<g clip-path="url(#card)">
-    {card_bg(cfg, rng, w, h, 14, .6)}
-    <circle cx="{cx}" cy="{cy}" r="70" fill="url(#core)"><animate attributeName="r" values="60;78;60" dur="4s" repeatCount="indefinite"/></circle>
-    <circle cx="{cx}" cy="{cy}" r="40" fill="#13120f" stroke="url(#edge)" stroke-width="2"/>
-    <text x="{cx}" y="{cy + 12}" text-anchor="middle" class="core" fill="url(#title)">&lt;/&gt;</text>
-    {"".join(rings)}
-    <text x="{w - 30}" y="{h - 24}" text-anchor="end" class="sub">{cfg["tag"]} · my toolbox in orbit</text>
-  </g>"""
-    return svg(w, h, "Tech stack", defs, style, content)
+    body = f"""{tile(0, 0, w, h, 20)}
+  <text x="32" y="48" class="lbl">24 TOOLS I SHIP WITH</text>
+  <circle cx="{cx}" cy="{cy}" r="34" fill="{SURFACE}" stroke="{LINE}" stroke-opacity=".14"/>
+  <circle cx="{cx}" cy="{cy}" r="4" fill="{acc}"><animate attributeName="r" values="3;5;3" dur="3s" repeatCount="indefinite"/></circle>
+  {"".join(rings)}"""
+    return svg(w, h, "Tech stack", bento_defs(), BENTO_CSS, body, border=False)
 
 
 HIGHLIGHTS = [
-    ("🏆", "Innohacks", "Winner · 100+ teams"),
-    ("🔬", "IIT Bombay", "Research"),
-    ("🎖️", "Delhi Govt.", "Excellence in Education"),
-    ("📚", "Chegg", "Subject Matter Expert"),
+    ("HACKATHON", "Innohacks", "Winner, out of 100+ teams"),
+    ("RESEARCH", "IIT Bombay", "Yoga × logical thinking study"),
+    ("AWARD", "Delhi Govt.", "Excellence in Education award"),
+    ("TEACHING", "Chegg SME", "100+ problems solved"),
 ]
 
 
 def highlights_card(cfg, season):
-    w, h = 1200, 230
-    rng = random.Random(f"{season}-highlights")
-    pw, ph = 540, 76
-    pills = []
-    for i, (emoji, title, sub) in enumerate(HIGHLIGHTS):
-        col, row = i % 2, i // 2
-        px = 600 + (col - 0.5) * (pw + 30)
-        py = 70 + row * (ph + 18) + ph / 2 - 10
-        b = 0.3 + i * 0.22
-        pills.append(f"""<g transform="translate({px:.0f} {py:.0f})"><g transform="scale(0)">
-        <animateTransform attributeName="transform" type="scale" values="0;1.12;.96;1" keyTimes="0;.55;.8;1" dur=".7s" begin="{b:.2f}s" fill="freeze"/>
-        <rect x="{-pw / 2}" y="{-ph / 2}" width="{pw}" height="{ph}" rx="{ph / 2}" fill="#13120f" fill-opacity=".8" stroke="url(#edge)" stroke-width="1.5"/>
-        <text x="{-pw / 2 + 46}" y="11" text-anchor="middle" style="font-size:30px">{emoji}</text>
-        <text x="{-pw / 2 + 86}" y="-4" class="t" fill="url(#title)">{title}</text>
-        <text x="{-pw / 2 + 86}" y="20" class="s">{sub}</text></g></g>""")
-    style = f"""
-    .t {{ font: 800 22px {SANS}; }}
-    .s {{ font: 500 15px {MONO}; fill: #d6ccbb; }}"""
-    content = f"""<g clip-path="url(#card)">
-    {card_bg(cfg, rng, w, h, 8, .5)}
-    {"".join(pills)}
-  </g>"""
-    return svg(w, h, "Highlights", common_defs(cfg, w, h, 22), style, content)
-
+    acc = cfg["title"][2]
+    w, h, g = 1200, 168, 14
+    tw = (w - g * 3) / 4
+    parts = []
+    for i, (kind, title, sub) in enumerate(HIGHLIGHTS):
+        x = i * (tw + g)
+        parts.append(enter(.15 + i * .12, f"""{tile(x, 0, tw, h, 16)}
+      <circle cx="{x + 26}" cy="38" r="3.5" fill="{acc}"/>
+      <text x="{x + 38}" y="42" class="lbl">{kind}</text>
+      <text x="{x + 22}" y="{h - 52}" style="font: 600 22px {SANS}; letter-spacing: -.3px" fill="{INK}">{title}</text>
+      <text x="{x + 22}" y="{h - 26}" class="sub">{sub}</text>"""))
+    return svg(w, h, "Highlights", bento_defs(), BENTO_CSS, "\n  ".join(parts), border=False)
 
 SECTIONS = {
     "toolbox": "Toolbox",
