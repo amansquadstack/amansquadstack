@@ -18,27 +18,27 @@ MONO = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace"
 
 SEASONS = {
     "winter": {
-        "blobs": ("#3b82f6", "#a5f3fc", "#c4b5fd"),
-        "colors": ("#ffffff", "#e0f2fe", "#bae6fd"),
-        "title": ("#a5f3fc", "#ffffff", "#c4b5fd"),
+        "blobs": ("#3f5266", "#8fa9c0", "#5d6b7e"),
+        "colors": ("#ece4d4", "#dfe6ea", "#b9c7d2"),
+        "title": ("#c9d4dc", "#ece4d4", "#8fa9c0"),
         "shape": "snow", "density": 1.6, "tag": "❄ winter", "bye": "stay warm",
     },
     "spring": {
-        "blobs": ("#7C3AED", "#34d399", "#f9a8d4"),
-        "colors": ("#fbcfe8", "#f9a8d4", "#fce7f3"),
-        "title": ("#f9a8d4", "#ffffff", "#a78bfa"),
+        "blobs": ("#6f7f5f", "#c99490", "#a7b494"),
+        "colors": ("#ecc9c4", "#d8a3a0", "#f2e3dc"),
+        "title": ("#b5c4a1", "#ece4d4", "#d29a94"),
         "shape": "petal", "density": 1.2, "tag": "🌸 spring", "bye": "fresh starts",
     },
     "summer": {
-        "blobs": ("#7C3AED", "#00E5FF", "#fbbf24"),
-        "colors": ("#fde68a", "#fcd34d", "#fef3c7"),
-        "title": ("#fcd34d", "#ffffff", "#00E5FF"),
+        "blobs": ("#5d8f8c", "#c9a24e", "#c47a52"),
+        "colors": ("#f0d9a0", "#e2b857", "#f5e6c4"),
+        "title": ("#8fbab6", "#ece4d4", "#e2b857"),
         "shape": "firefly", "density": 1.0, "tag": "☀ summer", "bye": "long days, short builds",
     },
     "autumn": {
-        "blobs": ("#7C3AED", "#f97316", "#dc2626"),
-        "colors": ("#f97316", "#ea580c", "#dc2626", "#f59e0b", "#b45309"),
-        "title": ("#a78bfa", "#fde68a", "#f97316"),
+        "blobs": ("#7a3427", "#b8623a", "#c99a3e"),
+        "colors": ("#c56a3d", "#a8552f", "#d9a441", "#8a3b2e", "#b98a3e"),
+        "title": ("#d9a441", "#ece4d4", "#c56a3d"),
         "shape": "leaf", "density": 1.0, "tag": "🍁 autumn", "bye": "falling for good code",
     },
 }
@@ -65,11 +65,11 @@ def common_defs(cfg, w, h, rx):
     t1, t2, t3 = cfg["title"]
     return f"""
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07070f"/><stop offset="0.55" stop-color="#120a2a"/><stop offset="1" stop-color="#04121f"/>
+      <stop offset="0" stop-color="#0f0e0c"/><stop offset="0.55" stop-color="#171410"/><stop offset="1" stop-color="#101111"/>
     </linearGradient>
-    <radialGradient id="blobA"><stop offset="0" stop-color="{a}" stop-opacity="0.7"/><stop offset="1" stop-color="{a}" stop-opacity="0"/></radialGradient>
-    <radialGradient id="blobB"><stop offset="0" stop-color="{b}" stop-opacity="0.5"/><stop offset="1" stop-color="{b}" stop-opacity="0"/></radialGradient>
-    <radialGradient id="blobC"><stop offset="0" stop-color="{c}" stop-opacity="0.45"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobA"><stop offset="0" stop-color="{a}" stop-opacity="0.38"/><stop offset="1" stop-color="{a}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobB"><stop offset="0" stop-color="{b}" stop-opacity="0.26"/><stop offset="1" stop-color="{b}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobC"><stop offset="0" stop-color="{c}" stop-opacity="0.24"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></radialGradient>
     <linearGradient id="title" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="{w}" y2="0" spreadMethod="repeat">
       <stop offset="0" stop-color="{t1}"/><stop offset="0.5" stop-color="{t2}"/><stop offset="1" stop-color="{t3}"/>
       <animateTransform attributeName="gradientTransform" type="translate" values="0 0;{w} 0" dur="8s" repeatCount="indefinite"/>
@@ -78,7 +78,7 @@ def common_defs(cfg, w, h, rx):
       <stop offset="0" stop-color="{t1}" stop-opacity="0"/><stop offset="0.5" stop-color="{t3}"/><stop offset="1" stop-color="{t1}" stop-opacity="0"/>
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+      <path d="M40 0H0V40" fill="none" stroke="#ece4d4" stroke-opacity="0.035"/>
     </pattern>
     <clipPath id="card"><rect width="{w}" height="{h}" rx="{rx}"/></clipPath>{SHAPE_DEFS}"""
 
@@ -215,7 +215,7 @@ def svg(w, h, label, defs, style, body, rx=22, border=True):
 ANIM_CSS = """
     @keyframes blink { 50% { opacity: 0 } }
     @keyframes rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
-    .cursor { fill: #00E5FF; animation: blink 1s steps(1) infinite; }"""
+    .cursor { animation: blink 1s steps(1) infinite; }"""
 
 
 # ---------------------------------------------------------------- assets
@@ -225,17 +225,19 @@ def header(cfg, season):
     rng = random.Random(f"{season}-header")
     style = ANIM_CSS + f"""
     .name {{ font: 800 92px {SANS}; letter-spacing: -2px; }}
-    .sub {{ font: 500 24px {SANS}; fill: #c9d1d9; letter-spacing: 6px; }}
-    .prompt {{ font: 500 18px {MONO}; fill: #8b949e; opacity: 0; animation: rise 1s ease 2.6s forwards; }}
-    .tag {{ font: 500 13px {MONO}; fill: #8b949e; opacity: .8; }}
-    .accent {{ fill: #00E5FF }} .accent2 {{ fill: #a78bfa }}
+    .sub {{ font: 500 24px {SANS}; fill: #d6ccbb; letter-spacing: 6px; }}
+    .prompt {{ font: 500 18px {MONO}; fill: #8f877a; opacity: 0; animation: rise 1s ease 2.6s forwards; }}
+    .tag {{ font: 500 13px {MONO}; fill: #8f877a; opacity: .8; }}
+    .accent {{ fill: {cfg["title"][0]} }} .accent2 {{ fill: {cfg["title"][2]} }}
+    .cursor {{ fill: {cfg["title"][2]} }}
     .scan {{ animation: scan 4s ease-in-out infinite; }}
     @keyframes scan {{ 0%,100% {{ transform: translateX(-300px); opacity: 0 }} 50% {{ opacity: 1 }} 100% {{ transform: translateX(300px) }} }}"""
-    defs = common_defs(cfg, w, h, 22) + """
+    acc = cfg["title"][2]
+    defs = common_defs(cfg, w, h, 22) + f"""
     <linearGradient id="name" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
-      <stop offset="0" stop-color="#a78bfa"/><stop offset="0.25" stop-color="#00E5FF"/><stop offset="0.5" stop-color="#ffffff"/>
-      <stop offset="0.75" stop-color="#FF4FA3"/><stop offset="1" stop-color="#a78bfa"/>
-      <animateTransform attributeName="gradientTransform" type="translate" values="-1200 0;0 0" dur="6s" repeatCount="indefinite"/>
+      <stop offset="0" stop-color="#ece4d4"/><stop offset="0.4" stop-color="#ece4d4"/><stop offset="0.5" stop-color="{acc}"/>
+      <stop offset="0.6" stop-color="#ece4d4"/><stop offset="1" stop-color="#ece4d4"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1200 0;0 0" dur="9s" repeatCount="indefinite"/>
     </linearGradient>"""
     body = f"""<g clip-path="url(#card)">
     <rect width="{w}" height="{h}" fill="url(#bg)"/>
@@ -285,7 +287,7 @@ def footer(cfg, season):
     rng = random.Random(f"{season}-footer")
     style = f"""
     .t {{ font: 800 36px {SANS}; }}
-    .s {{ font: 500 15px {MONO}; fill: #8b949e; }}"""
+    .s {{ font: 500 15px {MONO}; fill: #8f877a; }}"""
     body = f"""<g clip-path="url(#card)">
     <rect width="{w}" height="{h}" fill="url(#bg)"/>
     <rect width="{w}" height="{h}" fill="url(#grid)"/>
@@ -303,28 +305,28 @@ def terminal(cfg, season):
     rng = random.Random(f"{season}-terminal")
     style = f"""
     .mono {{ font: 500 17px {MONO}; }}
-    .p {{ fill: #a78bfa }} .t {{ fill: #00E5FF }} .w {{ fill: #e6edf3 }} .m {{ fill: #8b949e }} .k {{ fill: #FF4FA3 }} .g {{ fill: #3fb950 }} .y {{ fill: #f2cc60 }}
+    .p {{ fill: {cfg["title"][2]} }} .t {{ fill: {cfg["title"][0]} }} .w {{ fill: #ece4d4 }} .m {{ fill: #8f877a }} .k {{ fill: {cfg["title"][2]} }} .g {{ fill: #9db89a }} .y {{ fill: #d9b77e }}
     .ln {{ opacity: 0; animation: show .01s linear forwards; }}
     @keyframes show {{ to {{ opacity: 1 }} }}
     .type {{ clip-path: inset(0 100% 0 0); animation: type .9s steps(28) forwards; }}
     @keyframes type {{ to {{ clip-path: inset(0 0 0 0) }} }}
-    .cursor {{ fill: #00E5FF; animation: blink 1s steps(1) infinite; }}
+    .cursor {{ fill: {cfg["title"][2]}; animation: blink 1s steps(1) infinite; }}
     @keyframes blink {{ 50% {{ opacity: 0 }} }}
     .glow {{ animation: glow 4s ease-in-out infinite; }}
     @keyframes glow {{ 0%,100% {{ stroke-opacity: .25 }} 50% {{ stroke-opacity: .7 }} }}"""
     t1, _, t3 = cfg["title"]
     defs = common_defs(cfg, w, h, 14) + f"""
     <linearGradient id="border" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#7C3AED"/><stop offset=".5" stop-color="{t3}"/><stop offset="1" stop-color="{t1}"/>
+      <stop offset="0" stop-color="{t3}"/><stop offset=".5" stop-color="{t1}"/><stop offset="1" stop-color="{t3}"/>
     </linearGradient>"""
     body = f"""<g clip-path="url(#card)">
-    <rect width="{w}" height="{h}" fill="#0d1117"/>
+    <rect width="{w}" height="{h}" fill="#13120f"/>
     {blobs(w, h, .35)}
     {particles(cfg, rng, w, h, 12, smin=.45, smax=.9, omin=.25, omax=.5)}
   </g>
   <rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="14" fill="none" stroke="url(#border)" stroke-width="2" class="glow"/>
-  <path d="M1 15a14 14 0 0 1 14-14h870a14 14 0 0 1 14 14v25H1z" fill="#161b22"/>
-  <circle cx="26" cy="21" r="6.5" fill="#ff5f56"/><circle cx="48" cy="21" r="6.5" fill="#ffbd2e"/><circle cx="70" cy="21" r="6.5" fill="#27c93f"/>
+  <path d="M1 15a14 14 0 0 1 14-14h870a14 14 0 0 1 14 14v25H1z" fill="#1b1915"/>
+  <circle cx="26" cy="21" r="6.5" fill="#c9695c"/><circle cx="48" cy="21" r="6.5" fill="#d4a45a"/><circle cx="70" cy="21" r="6.5" fill="#8faa6a"/>
   <text x="450" y="26" text-anchor="middle" class="mono m" style="font-size:13px">aman — zsh — 90×24</text>
 
   <g class="mono">
@@ -452,7 +454,7 @@ def stats_card(cfg, season, st):
         x, y = ox + col * (tw + gx), oy + row * (th + gy)
         d = 0.15 + i * 0.12
         body.append(f"""<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".5s" begin="{d:.2f}s" fill="freeze"/>
-      <rect x="{x}" y="{y}" width="{tw}" height="{th}" rx="14" fill="#0d1117" fill-opacity=".72" stroke="url(#edge)" stroke-opacity=".9"/>
+      <rect x="{x}" y="{y}" width="{tw}" height="{th}" rx="14" fill="#13120f" fill-opacity=".72" stroke="url(#edge)" stroke-opacity=".9"/>
       <text x="{x + tw / 2}" y="{y + 30}" text-anchor="middle" class="lbl">{label.upper()}</text>
       {odometer(f"s{i}", val, x + tw / 2, y + 86, 44, "url(#title)", begin=d + .2)}
       <text x="{x + tw / 2}" y="{y + 115}" text-anchor="middle" class="sub">{sub}</text></g>""")
@@ -468,7 +470,7 @@ def stats_card(cfg, season, st):
     peak_i = max(range(len(wk)), key=lambda i: wk[i])
     px, py = pts[peak_i]
     body.append(f"""<text x="{sx}" y="{sy - 22}" class="lbl" text-anchor="start">WEEKLY CONTRIBUTIONS · LAST 12 MONTHS</text>
-    <line x1="{sx}" y1="{sy + sh}" x2="{sx + sw}" y2="{sy + sh}" stroke="#30363d"/>
+    <line x1="{sx}" y1="{sy + sh}" x2="{sx + sw}" y2="{sy + sh}" stroke="#2e2a24"/>
     <path d="{area}" fill="url(#areaFill)" opacity="0"><animate attributeName="opacity" values="0;1" dur="1s" begin="2.2s" fill="freeze"/></path>
     <path d="{line}" fill="none" stroke="url(#title)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
           stroke-dasharray="{length:.0f}" stroke-dashoffset="{length:.0f}">
@@ -479,8 +481,8 @@ def stats_card(cfg, season, st):
 
     style = f"""
     .h {{ font: 800 28px {SANS}; }}
-    .lbl {{ font: 600 12px {MONO}; fill: #8b949e; letter-spacing: 2px; }}
-    .sub {{ font: 500 13px {MONO}; fill: #8b949e; }}"""
+    .lbl {{ font: 600 12px {MONO}; fill: #8f877a; letter-spacing: 2px; }}
+    .sub {{ font: 500 13px {MONO}; fill: #8f877a; }}"""
     defs = common_defs(cfg, w, h, 22) + f"""
     <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="{t3}" stop-opacity=".35"/><stop offset="1" stop-color="{t3}" stop-opacity="0"/>
@@ -506,18 +508,20 @@ def languages_card(cfg, season, st):
         y = 100 + i * 46
         d = 0.3 + i * 0.15
         full = bw * l["pct"] / top
+        shade = cfg["title"][2]
+        op = max(1 - i * 0.15, 0.3)
         rows.append(f"""<g opacity="0"><animate attributeName="opacity" values="0;1" dur=".4s" begin="{d:.2f}s" fill="freeze"/>
-      <circle cx="56" cy="{y - 6}" r="7" fill="{l['color']}"/>
+      <circle cx="56" cy="{y - 6}" r="6" fill="{shade}" fill-opacity="{op:.2f}"/>
       <text x="74" y="{y}" class="n">{l['name']}</text>
-      <rect x="{bx}" y="{y - 16}" width="{bw}" height="18" rx="9" fill="#ffffff" fill-opacity=".06"/>
-      <rect x="{bx}" y="{y - 16}" width="0" height="18" rx="9" fill="{l['color']}">
+      <rect x="{bx}" y="{y - 16}" width="{bw}" height="18" rx="9" fill="#ece4d4" fill-opacity=".06"/>
+      <rect x="{bx}" y="{y - 16}" width="0" height="18" rx="9" fill="{shade}" fill-opacity="{op:.2f}">
         <animate attributeName="width" values="0;{full:.1f}" dur="1.2s" begin="{d + .1:.2f}s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect>
       <text x="{bx + bw + 24}" y="{y}" class="p">{l['pct']:.1f}%</text></g>""")
     style = f"""
     .h {{ font: 800 28px {SANS}; }}
-    .n {{ font: 600 17px {SANS}; fill: #e6edf3; }}
-    .p {{ font: 700 16px {MONO}; fill: #c9d1d9; }}
-    .sub {{ font: 500 13px {MONO}; fill: #8b949e; }}"""
+    .n {{ font: 600 17px {SANS}; fill: #ece4d4; }}
+    .p {{ font: 700 16px {MONO}; fill: #d6ccbb; }}
+    .sub {{ font: 500 13px {MONO}; fill: #8f877a; }}"""
     content = f"""<g clip-path="url(#card)">
     {card_bg(cfg, rng, w, h, 6, .55)}
     <text x="36" y="56" class="h" fill="url(#title)">Languages I commit in</text>
@@ -565,13 +569,13 @@ def orbit_card(cfg, season):
         {"".join(items)}</g>""")
     style = f"""
     .core {{ font: 800 34px {SANS}; }}
-    .sub {{ font: 500 13px {MONO}; fill: #8b949e; }}"""
+    .sub {{ font: 500 13px {MONO}; fill: #8f877a; }}"""
     defs = common_defs(cfg, w, h, 22) + f"""
     <radialGradient id="core"><stop offset="0" stop-color="{t3}" stop-opacity=".9"/><stop offset=".45" stop-color="{t1}" stop-opacity=".35"/><stop offset="1" stop-color="{t1}" stop-opacity="0"/></radialGradient>"""
     content = f"""<g clip-path="url(#card)">
     {card_bg(cfg, rng, w, h, 14, .6)}
     <circle cx="{cx}" cy="{cy}" r="70" fill="url(#core)"><animate attributeName="r" values="60;78;60" dur="4s" repeatCount="indefinite"/></circle>
-    <circle cx="{cx}" cy="{cy}" r="40" fill="#0d1117" stroke="url(#edge)" stroke-width="2"/>
+    <circle cx="{cx}" cy="{cy}" r="40" fill="#13120f" stroke="url(#edge)" stroke-width="2"/>
     <text x="{cx}" y="{cy + 12}" text-anchor="middle" class="core" fill="url(#title)">&lt;/&gt;</text>
     {"".join(rings)}
     <text x="{w - 30}" y="{h - 24}" text-anchor="end" class="sub">{cfg["tag"]} · my toolbox in orbit</text>
@@ -599,13 +603,13 @@ def highlights_card(cfg, season):
         b = 0.3 + i * 0.22
         pills.append(f"""<g transform="translate({px:.0f} {py:.0f})"><g transform="scale(0)">
         <animateTransform attributeName="transform" type="scale" values="0;1.12;.96;1" keyTimes="0;.55;.8;1" dur=".7s" begin="{b:.2f}s" fill="freeze"/>
-        <rect x="{-pw / 2}" y="{-ph / 2}" width="{pw}" height="{ph}" rx="{ph / 2}" fill="#0d1117" fill-opacity=".8" stroke="url(#edge)" stroke-width="1.5"/>
+        <rect x="{-pw / 2}" y="{-ph / 2}" width="{pw}" height="{ph}" rx="{ph / 2}" fill="#13120f" fill-opacity=".8" stroke="url(#edge)" stroke-width="1.5"/>
         <text x="{-pw / 2 + 46}" y="11" text-anchor="middle" style="font-size:30px">{emoji}</text>
         <text x="{-pw / 2 + 86}" y="-4" class="t" fill="url(#title)">{title}</text>
         <text x="{-pw / 2 + 86}" y="20" class="s">{sub}</text></g></g>""")
     style = f"""
     .t {{ font: 800 22px {SANS}; }}
-    .s {{ font: 500 15px {MONO}; fill: #c9d1d9; }}"""
+    .s {{ font: 500 15px {MONO}; fill: #d6ccbb; }}"""
     content = f"""<g clip-path="url(#card)">
     {card_bg(cfg, rng, w, h, 8, .5)}
     {"".join(pills)}

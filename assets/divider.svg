@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="40" viewBox="0 0 1200 40" role="img" aria-label="divider">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07070f"/><stop offset="0.55" stop-color="#120a2a"/><stop offset="1" stop-color="#04121f"/>
+      <stop offset="0" stop-color="#0f0e0c"/><stop offset="0.55" stop-color="#171410"/><stop offset="1" stop-color="#101111"/>
     </linearGradient>
-    <radialGradient id="blobA"><stop offset="0" stop-color="#7C3AED" stop-opacity="0.7"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
-    <radialGradient id="blobB"><stop offset="0" stop-color="#f97316" stop-opacity="0.5"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>
-    <radialGradient id="blobC"><stop offset="0" stop-color="#dc2626" stop-opacity="0.45"/><stop offset="1" stop-color="#dc2626" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobA"><stop offset="0" stop-color="#7a3427" stop-opacity="0.38"/><stop offset="1" stop-color="#7a3427" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobB"><stop offset="0" stop-color="#b8623a" stop-opacity="0.26"/><stop offset="1" stop-color="#b8623a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobC"><stop offset="0" stop-color="#c99a3e" stop-opacity="0.24"/><stop offset="1" stop-color="#c99a3e" stop-opacity="0"/></radialGradient>
     <linearGradient id="title" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
-      <stop offset="0" stop-color="#a78bfa"/><stop offset="0.5" stop-color="#fde68a"/><stop offset="1" stop-color="#f97316"/>
+      <stop offset="0" stop-color="#d9a441"/><stop offset="0.5" stop-color="#ece4d4"/><stop offset="1" stop-color="#c56a3d"/>
       <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1200 0" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
     <linearGradient id="edge" x1="0" x2="1">
-      <stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset="0.5" stop-color="#f97316"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
+      <stop offset="0" stop-color="#d9a441" stop-opacity="0"/><stop offset="0.5" stop-color="#c56a3d"/><stop offset="1" stop-color="#d9a441" stop-opacity="0"/>
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+      <path d="M40 0H0V40" fill="none" stroke="#ece4d4" stroke-opacity="0.035"/>
     </pattern>
     <clipPath id="card"><rect width="1200" height="40" rx="0"/></clipPath>
     <g id="snow" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none">
@@ -28,10 +28,10 @@
   <style>
   </style>
   <rect x="0" y="19" width="1200" height="2" rx="1" fill="url(#edge)" opacity=".6"/>
-  <g><animateTransform attributeName="transform" type="translate" values="-30 7; 400 -7; 800 20; 1230 7" dur="21.6s" begin="-8.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="3.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.94" transform="scale(0.67)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="-30 7; 400 21; 800 -6; 1230 7" dur="25.7s" begin="-18.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.89" transform="scale(0.65)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="-30 10; 400 24; 800 -3; 1230 10" dur="20.8s" begin="-6.6s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.57" transform="scale(0.76)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="-30 7; 400 21; 800 -6; 1230 7" dur="25.8s" begin="-18.5s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.82" transform="scale(0.89)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="-30 11; 400 -2; 800 24; 1230 11" dur="20.1s" begin="-3.1s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.8s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.79" transform="scale(0.60)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="-30 23; 400 10; 800 37; 1230 23" dur="20.3s" begin="-14.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.94" transform="scale(0.81)"/></g></g>
+  <g><animateTransform attributeName="transform" type="translate" values="-30 7; 400 -7; 800 20; 1230 7" dur="21.6s" begin="-8.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="3.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#b98a3e" opacity="0.94" transform="scale(0.67)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="-30 7; 400 21; 800 -6; 1230 7" dur="25.7s" begin="-18.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#a8552f" opacity="0.89" transform="scale(0.65)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="-30 10; 400 24; 800 -3; 1230 10" dur="20.8s" begin="-6.6s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#8a3b2e" opacity="0.57" transform="scale(0.76)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="-30 7; 400 21; 800 -6; 1230 7" dur="25.8s" begin="-18.5s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#8a3b2e" opacity="0.82" transform="scale(0.89)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="-30 11; 400 -2; 800 24; 1230 11" dur="20.1s" begin="-3.1s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.8s" repeatCount="indefinite"/><use href="#leaf" style="color:#a8552f" opacity="0.79" transform="scale(0.60)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="-30 23; 400 10; 800 37; 1230 23" dur="20.3s" begin="-14.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#c56a3d" opacity="0.94" transform="scale(0.81)"/></g></g>
 </svg>

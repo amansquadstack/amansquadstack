@@ -20,6 +20,7 @@ jobs:
           # Optional: add a PAT as MY_GITHUB_TOKEN secret to include private contributions
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
+          SETTING_JSON: .github/3d-settings.json
 
       - name: Commit & push
         run: |
