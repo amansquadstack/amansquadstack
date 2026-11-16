@@ -24,5 +24,13 @@ jobs:
           github-token: ${{ secrets.MY_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           output-path: assets/space-shooter.gif
           strategy: random
-          no-amend: "true"
-          commit-message: "chore: update space shooter"
+          no-commit: "true"
+
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/space-shooter.gif
+          git commit -m "chore: update space shooter" || exit 0
+          git pull --rebase
+          git push
