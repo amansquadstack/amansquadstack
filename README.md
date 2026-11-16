@@ -28,7 +28,7 @@
 
 ## 🏆 Highlights
 
-<img src="https://img.shields.io/badge/🏆_Innohacks-Champion_(100%2B_teams)-7C3AED?style=for-the-badge&labelColor=0d1117"/>
+<img src="https://img.shields.io/badge/🏆_Innohacks-Winner_·_100%2B_teams-7C3AED?style=for-the-badge&labelColor=0d1117"/>
 <img src="https://img.shields.io/badge/🔬_IIT_Bombay-Research-00B8D4?style=for-the-badge&labelColor=0d1117"/>
 <br/>
 <img src="https://img.shields.io/badge/🎖️_Delhi_Govt.-Excellence_in_Education-FF4FA3?style=for-the-badge&labelColor=0d1117"/>
