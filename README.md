@@ -39,10 +39,12 @@
 ## 📊 GitHub in Motion
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./profile-3d-contrib/profile-night-rainbow.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="./profile-3d-contrib/profile-season-animate.svg" />
-  <img src="./profile-3d-contrib/profile-night-rainbow.svg" width="100%" alt="3D contribution graph" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amansquadstack/amansquadstack/main/profile-3d-contrib/profile-night-rainbow.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/amansquadstack/amansquadstack/main/profile-3d-contrib/profile-season-animate.svg" />
+  <img src="https://raw.githubusercontent.com/amansquadstack/amansquadstack/main/profile-3d-contrib/profile-night-rainbow.svg" width="100%" alt="3D contribution graph" />
 </picture>
+
+<br/><br/>
 
 <img src="https://streak-stats.demolab.com?user=amansquadstack&hide_border=true&background=0d1117&stroke=7C3AED&ring=00E5FF&fire=FF4FA3&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=00E5FF&sideLabels=a78bfa&dates=8B949E" width="49%" />
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=amansquadstack&theme=tokyonight" width="49%" />
