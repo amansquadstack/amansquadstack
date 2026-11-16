@@ -1,25 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="Aman Singh">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07070f"/>
-      <stop offset="0.55" stop-color="#120a2a"/>
-      <stop offset="1" stop-color="#04121f"/>
+      <stop offset="0" stop-color="#07070f"/><stop offset="0.55" stop-color="#120a2a"/><stop offset="1" stop-color="#04121f"/>
     </linearGradient>
     <radialGradient id="blobA"><stop offset="0" stop-color="#7C3AED" stop-opacity="0.7"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
     <radialGradient id="blobB"><stop offset="0" stop-color="#f97316" stop-opacity="0.5"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>
     <radialGradient id="blobC"><stop offset="0" stop-color="#dc2626" stop-opacity="0.45"/><stop offset="1" stop-color="#dc2626" stop-opacity="0"/></radialGradient>
-    <linearGradient id="name" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
-      <stop offset="0" stop-color="#a78bfa"/>
-      <stop offset="0.25" stop-color="#00E5FF"/>
-      <stop offset="0.5" stop-color="#ffffff"/>
-      <stop offset="0.75" stop-color="#FF4FA3"/>
-      <stop offset="1" stop-color="#a78bfa"/>
-      <animateTransform attributeName="gradientTransform" type="translate" values="-1200 0;0 0" dur="6s" repeatCount="indefinite"/>
+    <linearGradient id="title" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset="0.5" stop-color="#fde68a"/><stop offset="1" stop-color="#f97316"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1200 0" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
-    <linearGradient id="line" x1="0" x2="1">
-      <stop offset="0" stop-color="#7C3AED" stop-opacity="0"/>
-      <stop offset="0.5" stop-color="#00E5FF"/>
-      <stop offset="1" stop-color="#FF4FA3" stop-opacity="0"/>
+    <linearGradient id="edge" x1="0" x2="1">
+      <stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset="0.5" stop-color="#f97316"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
@@ -32,71 +24,68 @@
     <path id="leaf" fill="currentColor" d="M0-12L2.5-6L6-8.5L5-3L10.5-4.5L8.5 0L11.5 2L5.5 3.2L6.5 7.5L1.2 5.2L.8 12H-.8L-1.2 5.2L-6.5 7.5L-5.5 3.2L-11.5 2L-8.5 0L-10.5-4.5L-5-3L-6-8.5L-2.5-6Z"/>
     <path id="petal" fill="currentColor" d="M0-7C4.5-7 6-1 0 7C-6-1-4.5-7-1.2-6.2L0-4.6L1.2-6.2Z"/>
     <radialGradient id="ffglow"><stop offset="0" stop-color="#fff7c2"/><stop offset=".35" stop-color="#fcd34d" stop-opacity=".9"/><stop offset="1" stop-color="#fcd34d" stop-opacity="0"/></radialGradient>
+    <linearGradient id="name" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset="0.25" stop-color="#00E5FF"/><stop offset="0.5" stop-color="#ffffff"/>
+      <stop offset="0.75" stop-color="#FF4FA3"/><stop offset="1" stop-color="#a78bfa"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1200 0;0 0" dur="6s" repeatCount="indefinite"/>
+    </linearGradient>
   </defs>
-
   <style>
-    .title { font: 800 92px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; letter-spacing: -2px;
-             opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .2s forwards; }
-    .sub { font: 500 24px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; fill: #c9d1d9; letter-spacing: 6px;
-           opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .7s forwards; }
-    .prompt { font: 500 18px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #8b949e;
-              opacity: 0; animation: rise 1s ease 1.2s forwards; }
-    .tag { font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #8b949e; opacity: .8; }
-    .accent { fill: #00E5FF } .accent2 { fill: #a78bfa }
-    .cursor { fill: #00E5FF; animation: blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0 } }
     @keyframes rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+    .cursor { fill: #00E5FF; animation: blink 1s steps(1) infinite; }
+    .name { font: 800 92px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; letter-spacing: -2px; opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .2s forwards; }
+    .sub { font: 500 24px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; fill: #c9d1d9; letter-spacing: 6px; opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .7s forwards; }
+    .prompt { font: 500 18px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #8b949e; opacity: 0; animation: rise 1s ease 1.2s forwards; }
+    .tag { font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #8b949e; opacity: .8; }
+    .accent { fill: #00E5FF } .accent2 { fill: #a78bfa }
     .scan { animation: scan 4s ease-in-out infinite; }
     @keyframes scan { 0%,100% { transform: translateX(-300px); opacity: 0 } 50% { opacity: 1 } 100% { transform: translateX(300px) } }
   </style>
-
   <g clip-path="url(#card)">
     <rect width="1200" height="340" fill="url(#bg)"/>
     <rect width="1200" height="340" fill="url(#grid)"/>
-
-    <ellipse cx="250" cy="80" rx="320" ry="220" fill="url(#blobA)">
-      <animate attributeName="cx" values="250;420;250" dur="14s" repeatCount="indefinite"/>
-      <animate attributeName="cy" values="80;160;80" dur="11s" repeatCount="indefinite"/>
+    <g opacity="1.0">
+    <ellipse cx="240" cy="85" rx="324" ry="221" fill="url(#blobA)">
+      <animate attributeName="cx" values="240;420;240" dur="14s" repeatCount="indefinite"/>
     </ellipse>
-    <ellipse cx="950" cy="260" rx="300" ry="200" fill="url(#blobB)">
-      <animate attributeName="cx" values="950;780;950" dur="12s" repeatCount="indefinite"/>
-      <animate attributeName="cy" values="260;190;260" dur="9s" repeatCount="indefinite"/>
+    <ellipse cx="960" cy="255" rx="300" ry="204" fill="url(#blobB)">
+      <animate attributeName="cx" values="960;780;960" dur="12s" repeatCount="indefinite"/>
     </ellipse>
-    <ellipse cx="640" cy="330" rx="260" ry="160" fill="url(#blobC)">
-      <animate attributeName="cx" values="640;520;760;640" dur="16s" repeatCount="indefinite"/>
-    </ellipse>
-
-    <!-- autumn particles -->
-    <g><animateTransform attributeName="transform" type="translate" values="230 -30; 249 170; 220 370" dur="16.6s" begin="-9.4s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.87" transform="scale(0.93)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="1146 -30; 1181 170; 1129 370" dur="14.3s" begin="-4.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="3.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.88" transform="scale(1.05)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="273 -30; 298 170; 260 370" dur="13.2s" begin="-2.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.73" transform="scale(1.16)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="338 -30; 363 170; 326 370" dur="11.4s" begin="-1.6s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.0s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.76" transform="scale(0.75)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="1039 -30; 1015 170; 1050 370" dur="14.3s" begin="-3.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.83" transform="scale(0.66)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="180 -30; 155 170; 192 370" dur="9.4s" begin="-0.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.81" transform="scale(1.19)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="329 -30; 290 170; 348 370" dur="9.8s" begin="-4.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.62" transform="scale(1.10)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="73 -30; 35 170; 93 370" dur="15.6s" begin="-11.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.67" transform="scale(1.25)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="601 -30; 559 170; 622 370" dur="14.6s" begin="-2.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.70" transform="scale(1.33)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="505 -30; 460 170; 527 370" dur="10.3s" begin="-4.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.77" transform="scale(0.90)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="16 -30; 49 170; 0 370" dur="10.7s" begin="-4.6s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.77" transform="scale(0.79)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="939 -30; 977 170; 919 370" dur="12.3s" begin="-6.1s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.76" transform="scale(1.13)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="865 -30; 840 170; 877 370" dur="11.2s" begin="-2.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="6.2s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.88" transform="scale(1.17)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="648 -30; 607 170; 669 370" dur="13.8s" begin="-0.4s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="3.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.86" transform="scale(1.19)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="424 -30; 380 170; 447 370" dur="11.4s" begin="-5.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.8s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.79" transform="scale(0.80)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="543 -30; 580 170; 525 370" dur="15.8s" begin="-15.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.93" transform="scale(0.67)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="344 -30; 368 170; 333 370" dur="12.0s" begin="-12.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="6.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.83" transform="scale(0.56)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="972 -30; 952 170; 982 370" dur="17.0s" begin="-0.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.90" transform="scale(1.24)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="438 -30; 477 170; 418 370" dur="17.1s" begin="-2.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.71" transform="scale(1.30)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="1164 -30; 1199 170; 1146 370" dur="14.9s" begin="-1.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.71" transform="scale(1.24)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="166 -30; 191 170; 154 370" dur="13.3s" begin="-3.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.65" transform="scale(1.05)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="913 -30; 885 170; 927 370" dur="9.5s" begin="-5.1s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.2s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.81" transform="scale(1.09)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="466 -30; 433 170; 483 370" dur="16.4s" begin="-6.9s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.6s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.69" transform="scale(1.28)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="161 -30; 131 170; 176 370" dur="16.2s" begin="-4.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.82" transform="scale(1.15)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="796 -30; 781 170; 803 370" dur="11.5s" begin="-3.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="3.2s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.59" transform="scale(0.82)"/></g></g>
-    <g><animateTransform attributeName="transform" type="translate" values="877 -30; 853 170; 889 370" dur="17.8s" begin="-11.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.75" transform="scale(1.07)"/></g></g>
-
-    <text class="title" x="600" y="160" text-anchor="middle" fill="url(#name)">Aman Singh</text>
+    <ellipse cx="636" cy="340" rx="264" ry="170" fill="url(#blobC)">
+      <animate attributeName="cx" values="636;516;756;636" dur="16s" repeatCount="indefinite"/>
+    </ellipse></g>
+    <g><animateTransform attributeName="transform" type="translate" values="973 -30; 993 170; 963 370" dur="10.4s" begin="-4.9s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.0s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.85" transform="scale(0.75)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="58 -30; 85 170; 44 370" dur="10.2s" begin="-5.4s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="6.6s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.57" transform="scale(0.97)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="743 -30; 768 170; 731 370" dur="17.9s" begin="-9.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.63" transform="scale(0.81)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="444 -30; 489 170; 422 370" dur="10.9s" begin="-4.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.70" transform="scale(0.87)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="157 -30; 120 170; 176 370" dur="17.2s" begin="-14.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.90" transform="scale(0.94)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="612 -30; 629 170; 604 370" dur="12.7s" begin="-2.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.8s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.85" transform="scale(0.63)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="1121 -30; 1087 170; 1139 370" dur="13.7s" begin="-8.4s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="6.0s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.73" transform="scale(1.31)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="317 -30; 355 170; 297 370" dur="17.6s" begin="-8.5s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.62" transform="scale(1.19)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="834 -30; 852 170; 824 370" dur="13.8s" begin="-2.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.82" transform="scale(0.72)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="397 -30; 416 170; 387 370" dur="9.7s" begin="-1.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="6.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.92" transform="scale(1.01)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="393 -30; 418 170; 381 370" dur="13.3s" begin="-11.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="7.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.59" transform="scale(0.85)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="304 -30; 334 170; 288 370" dur="14.7s" begin="-6.4s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4.8s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.80" transform="scale(0.84)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="1156 -30; 1133 170; 1168 370" dur="14.7s" begin="-12.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.94" transform="scale(0.79)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="1131 -30; 1174 170; 1109 370" dur="9.1s" begin="-1.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.63" transform="scale(1.02)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="485 -30; 504 170; 476 370" dur="9.1s" begin="-5.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="6.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.63" transform="scale(1.23)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="819 -30; 846 170; 805 370" dur="15.8s" begin="-0.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.4s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.62" transform="scale(1.13)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="112 -30; 135 170; 101 370" dur="9.7s" begin="-8.9s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.94" transform="scale(0.96)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="243 -30; 214 170; 257 370" dur="15.9s" begin="-2.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="6.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.81" transform="scale(1.30)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="114 -30; 147 170; 97 370" dur="9.5s" begin="-9.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.86" transform="scale(0.81)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="442 -30; 417 170; 454 370" dur="11.3s" begin="-6.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.86" transform="scale(0.67)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="1139 -30; 1157 170; 1130 370" dur="17.3s" begin="-10.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="8.0s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.65" transform="scale(0.96)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="891 -30; 927 170; 873 370" dur="11.5s" begin="-11.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="3.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.70" transform="scale(0.78)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="775 -30; 793 170; 766 370" dur="16.0s" begin="-15.0s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.8s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.77" transform="scale(0.76)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="414 -30; 387 170; 427 370" dur="13.7s" begin="-12.4s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.59" transform="scale(0.64)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="419 -30; 388 170; 435 370" dur="14.0s" begin="-8.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="6.6s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.88" transform="scale(0.91)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="822 -30; 841 170; 812 370" dur="12.5s" begin="-10.1s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.72" transform="scale(1.34)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="1060 -30; 1037 170; 1071 370" dur="13.0s" begin="-9.5s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.83" transform="scale(0.65)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="465 -30; 494 170; 450 370" dur="10.1s" begin="-3.7s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4.0s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.65" transform="scale(1.24)"/></g></g>
+    <text class="name" x="600" y="160" text-anchor="middle" fill="url(#name)">Aman Singh</text>
     <text class="sub" x="600" y="210" text-anchor="middle">SOFTWARE ENGINEER · BUILDER · TINKERER</text>
-    <rect x="450" y="232" width="300" height="2" fill="url(#line)" class="scan"/>
+    <rect x="450" y="232" width="300" height="2" fill="url(#edge)" class="scan"/>
     <text class="prompt" x="600" y="280" text-anchor="middle"><tspan class="accent2">aman@github</tspan>:<tspan class="accent">~</tspan>$ building something new<tspan class="cursor">▍</tspan></text>
     <text class="tag" x="1176" y="322" text-anchor="end">🍁 autumn</text>
   </g>

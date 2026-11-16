@@ -1,0 +1,349 @@
+#!/usr/bin/env python3
+"""Generate all seasonal README SVGs into an assets directory.
+
+Season is picked from today's month (northern hemisphere) unless SEASON env is set:
+  winter Dec-Feb · spring Mar-May · summer Jun-Aug · autumn Sep-Nov
+
+Writes: header.svg, divider.svg, terminal.svg, footer.svg,
+        section-toolbox.svg, section-highlights.svg, section-motion.svg
+Usage: python season_assets.py [assets_dir]
+"""
+import datetime
+import os
+import random
+import sys
+
+SANS = "'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif"
+MONO = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace"
+
+SEASONS = {
+    "winter": {
+        "blobs": ("#3b82f6", "#a5f3fc", "#c4b5fd"),
+        "colors": ("#ffffff", "#e0f2fe", "#bae6fd"),
+        "title": ("#a5f3fc", "#ffffff", "#c4b5fd"),
+        "shape": "snow", "density": 1.6, "tag": "❄ winter", "bye": "stay warm",
+    },
+    "spring": {
+        "blobs": ("#7C3AED", "#34d399", "#f9a8d4"),
+        "colors": ("#fbcfe8", "#f9a8d4", "#fce7f3"),
+        "title": ("#f9a8d4", "#ffffff", "#a78bfa"),
+        "shape": "petal", "density": 1.2, "tag": "🌸 spring", "bye": "fresh starts",
+    },
+    "summer": {
+        "blobs": ("#7C3AED", "#00E5FF", "#fbbf24"),
+        "colors": ("#fde68a", "#fcd34d", "#fef3c7"),
+        "title": ("#fcd34d", "#ffffff", "#00E5FF"),
+        "shape": "firefly", "density": 1.0, "tag": "☀ summer", "bye": "long days, short builds",
+    },
+    "autumn": {
+        "blobs": ("#7C3AED", "#f97316", "#dc2626"),
+        "colors": ("#f97316", "#ea580c", "#dc2626", "#f59e0b", "#b45309"),
+        "title": ("#a78bfa", "#fde68a", "#f97316"),
+        "shape": "leaf", "density": 1.0, "tag": "🍁 autumn", "bye": "falling for good code",
+    },
+}
+
+SHAPE_DEFS = """
+    <g id="snow" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none">
+      <path d="M0-9V9M-7.8-4.5L7.8 4.5M-7.8 4.5L7.8-4.5"/>
+      <path d="M-2.5-7L0-4.5L2.5-7M-2.5 7L0 4.5L2.5 7M-7.3-1.2L-4-2.3L-4.8-5.5M7.3 1.2L4 2.3L4.8 5.5M-7.3 1.2L-4 2.3L-4.8 5.5M7.3-1.2L4-2.3L4.8-5.5" stroke-width="1.1"/>
+    </g>
+    <path id="leaf" fill="currentColor" d="M0-12L2.5-6L6-8.5L5-3L10.5-4.5L8.5 0L11.5 2L5.5 3.2L6.5 7.5L1.2 5.2L.8 12H-.8L-1.2 5.2L-6.5 7.5L-5.5 3.2L-11.5 2L-8.5 0L-10.5-4.5L-5-3L-6-8.5L-2.5-6Z"/>
+    <path id="petal" fill="currentColor" d="M0-7C4.5-7 6-1 0 7C-6-1-4.5-7-1.2-6.2L0-4.6L1.2-6.2Z"/>
+    <radialGradient id="ffglow"><stop offset="0" stop-color="#fff7c2"/><stop offset=".35" stop-color="#fcd34d" stop-opacity=".9"/><stop offset="1" stop-color="#fcd34d" stop-opacity="0"/></radialGradient>"""
+
+
+def season_for(today: datetime.date) -> str:
+    return {12: "winter", 1: "winter", 2: "winter", 3: "spring", 4: "spring", 5: "spring",
+            6: "summer", 7: "summer", 8: "summer"}.get(today.month, "autumn")
+
+
+# ---------------------------------------------------------------- building blocks
+
+def common_defs(cfg, w, h, rx):
+    a, b, c = cfg["blobs"]
+    t1, t2, t3 = cfg["title"]
+    return f"""
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07070f"/><stop offset="0.55" stop-color="#120a2a"/><stop offset="1" stop-color="#04121f"/>
+    </linearGradient>
+    <radialGradient id="blobA"><stop offset="0" stop-color="{a}" stop-opacity="0.7"/><stop offset="1" stop-color="{a}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobB"><stop offset="0" stop-color="{b}" stop-opacity="0.5"/><stop offset="1" stop-color="{b}" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobC"><stop offset="0" stop-color="{c}" stop-opacity="0.45"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="title" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="{w}" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="{t1}"/><stop offset="0.5" stop-color="{t2}"/><stop offset="1" stop-color="{t3}"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;{w} 0" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" x2="1">
+      <stop offset="0" stop-color="{t1}" stop-opacity="0"/><stop offset="0.5" stop-color="{t3}"/><stop offset="1" stop-color="{t1}" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+    </pattern>
+    <clipPath id="card"><rect width="{w}" height="{h}" rx="{rx}"/></clipPath>{SHAPE_DEFS}"""
+
+
+def blobs(w, h, strength=1.0):
+    return f"""<g opacity="{strength}">
+    <ellipse cx="{w * .2:.0f}" cy="{h * .25:.0f}" rx="{w * .27:.0f}" ry="{max(h * .65, 60):.0f}" fill="url(#blobA)">
+      <animate attributeName="cx" values="{w * .2:.0f};{w * .35:.0f};{w * .2:.0f}" dur="14s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="{w * .8:.0f}" cy="{h * .75:.0f}" rx="{w * .25:.0f}" ry="{max(h * .6, 60):.0f}" fill="url(#blobB)">
+      <animate attributeName="cx" values="{w * .8:.0f};{w * .65:.0f};{w * .8:.0f}" dur="12s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="{w * .53:.0f}" cy="{h:.0f}" rx="{w * .22:.0f}" ry="{max(h * .5, 50):.0f}" fill="url(#blobC)">
+      <animate attributeName="cx" values="{w * .53:.0f};{w * .43:.0f};{w * .63:.0f};{w * .53:.0f}" dur="16s" repeatCount="indefinite"/>
+    </ellipse></g>"""
+
+
+def particles(cfg, rng, w, h, count, mode="fall", smin=0.55, smax=1.35, omin=0.55, omax=0.95):
+    """mode: 'fall' (top -> bottom) or 'drift' (left -> right)."""
+    out = []
+    shape = cfg["shape"]
+    count = max(1, round(count * cfg["density"]))
+    for _ in range(count):
+        dur = rng.uniform(9, 18) if mode == "fall" else rng.uniform(14, 26)
+        begin = -rng.uniform(0, dur)  # negative begin: already mid-flight on load
+        scale = rng.uniform(smin, smax)
+        color = rng.choice(cfg["colors"])
+        opacity = rng.uniform(omin, omax)
+        sway = rng.uniform(15, 45) * rng.choice((-1, 1))
+
+        if shape == "firefly":
+            x, y = rng.uniform(10, w - 10), rng.uniform(6, h - 6)
+            if mode == "fall":  # rise from below
+                y0, y1 = h + 20, rng.uniform(-20, h * 0.4)
+                path = f"{x:.0f} {y0:.0f}; {x + sway:.0f} {(y0 + y1) / 2:.0f}; {x - sway / 2:.0f} {y1:.0f}"
+            else:  # wander in place
+                dy = min(h / 3, 20)
+                path = f"{x:.0f} {y:.0f}; {x + sway:.0f} {y - dy:.0f}; {x - sway / 2:.0f} {y + dy / 2:.0f}; {x:.0f} {y:.0f}"
+            out.append(
+                f'<g><animateTransform attributeName="transform" type="translate" values="{path}" '
+                f'dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/>'
+                f'<circle r="{8 * scale:.1f}" fill="url(#ffglow)" opacity="{opacity:.2f}">'
+                f'<animate attributeName="opacity" values=".1;{opacity:.2f};.1" dur="{rng.uniform(1.5, 3.5):.1f}s" '
+                f'begin="{-rng.uniform(0, 3):.1f}s" repeatCount="indefinite"/></circle></g>'
+            )
+            continue
+
+        if mode == "fall":
+            x = rng.uniform(10, w - 10)
+            path = f"{x:.0f} -30; {x + sway:.0f} {h / 2:.0f}; {x - sway / 2:.0f} {h + 30}"
+        else:
+            y = rng.uniform(6, h - 6)
+            bob = min(h / 3, 14) * rng.choice((-1, 1))
+            path = f"-30 {y:.0f}; {w / 3:.0f} {y + bob:.0f}; {2 * w / 3:.0f} {y - bob:.0f}; {w + 30} {y:.0f}"
+
+        if shape == "snow" and rng.random() < 0.45:
+            inner = f'<circle r="{1.5 * scale + 0.8:.1f}" fill="{color}" opacity="{opacity:.2f}"/>'
+        else:
+            spin = rng.choice(("0;360", "360;0"))
+            inner = (
+                f'<g><animateTransform attributeName="transform" type="rotate" values="{spin}" '
+                f'dur="{rng.uniform(3, 8):.1f}s" repeatCount="indefinite"/>'
+                f'<use href="#{shape}" style="color:{color}" opacity="{opacity:.2f}" transform="scale({scale:.2f})"/></g>'
+            )
+        out.append(
+            f'<g><animateTransform attributeName="transform" type="translate" values="{path}" '
+            f'dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/>{inner}</g>'
+        )
+    return "\n    ".join(out)
+
+
+def ground(cfg, rng, w, h):
+    """Things that have settled along the bottom edge (footer)."""
+    shape = cfg["shape"]
+    out = []
+    if shape == "snow":
+        pts = " ".join(f"L{x} {h - 10 - 6 * ((x // 60) % 3)}" for x in range(0, w + 60, 60))
+        out.append(f'<path d="M0 {h} {pts} L{w} {h}Z" fill="#e0f2fe" opacity=".18"/>')
+    for x in range(14, w, 26):
+        x += rng.uniform(-8, 8)
+        y = h - rng.uniform(4, 14)
+        color = rng.choice(cfg["colors"])
+        if shape == "firefly":
+            if rng.random() < 0.35:
+                out.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rng.uniform(3, 6):.1f}" fill="url(#ffglow)" opacity=".7"/>')
+            continue
+        if shape == "snow":
+            out.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rng.uniform(1, 2.5):.1f}" fill="#ffffff" opacity=".5"/>')
+            continue
+        out.append(
+            f'<use href="#{shape}" style="color:{color}" opacity="{rng.uniform(.45, .85):.2f}" '
+            f'transform="translate({x:.0f} {y:.0f}) rotate({rng.uniform(0, 360):.0f}) scale({rng.uniform(.5, .95):.2f})"/>'
+        )
+    return "\n    ".join(out)
+
+
+def svg(w, h, label, defs, style, body, rx=22, border=True):
+    edge = (f'\n  <rect x="0.5" y="0.5" width="{w - 1}" height="{h - 1}" rx="{rx}" fill="none" '
+            f'stroke="#ffffff" stroke-opacity="0.08"/>') if border else ""
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{label}">
+  <defs>{defs}
+  </defs>
+  <style>{style}
+  </style>
+  {body}{edge}
+</svg>
+"""
+
+
+ANIM_CSS = """
+    @keyframes blink { 50% { opacity: 0 } }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+    .cursor { fill: #00E5FF; animation: blink 1s steps(1) infinite; }"""
+
+
+# ---------------------------------------------------------------- assets
+
+def header(cfg, season):
+    w, h = 1200, 340
+    rng = random.Random(f"{season}-header")
+    style = ANIM_CSS + f"""
+    .name {{ font: 800 92px {SANS}; letter-spacing: -2px; opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .2s forwards; }}
+    .sub {{ font: 500 24px {SANS}; fill: #c9d1d9; letter-spacing: 6px; opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .7s forwards; }}
+    .prompt {{ font: 500 18px {MONO}; fill: #8b949e; opacity: 0; animation: rise 1s ease 1.2s forwards; }}
+    .tag {{ font: 500 13px {MONO}; fill: #8b949e; opacity: .8; }}
+    .accent {{ fill: #00E5FF }} .accent2 {{ fill: #a78bfa }}
+    .scan {{ animation: scan 4s ease-in-out infinite; }}
+    @keyframes scan {{ 0%,100% {{ transform: translateX(-300px); opacity: 0 }} 50% {{ opacity: 1 }} 100% {{ transform: translateX(300px) }} }}"""
+    defs = common_defs(cfg, w, h, 22) + """
+    <linearGradient id="name" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset="0.25" stop-color="#00E5FF"/><stop offset="0.5" stop-color="#ffffff"/>
+      <stop offset="0.75" stop-color="#FF4FA3"/><stop offset="1" stop-color="#a78bfa"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1200 0;0 0" dur="6s" repeatCount="indefinite"/>
+    </linearGradient>"""
+    body = f"""<g clip-path="url(#card)">
+    <rect width="{w}" height="{h}" fill="url(#bg)"/>
+    <rect width="{w}" height="{h}" fill="url(#grid)"/>
+    {blobs(w, h)}
+    {particles(cfg, rng, w, h, 28)}
+    <text class="name" x="600" y="160" text-anchor="middle" fill="url(#name)">Aman Singh</text>
+    <text class="sub" x="600" y="210" text-anchor="middle">SOFTWARE ENGINEER · BUILDER · TINKERER</text>
+    <rect x="450" y="232" width="300" height="2" fill="url(#edge)" class="scan"/>
+    <text class="prompt" x="600" y="280" text-anchor="middle"><tspan class="accent2">aman@github</tspan>:<tspan class="accent">~</tspan>$ building something new<tspan class="cursor">▍</tspan></text>
+    <text class="tag" x="1176" y="322" text-anchor="end">{cfg["tag"]}</text>
+  </g>"""
+    return svg(w, h, "Aman Singh", defs, style, body)
+
+
+def divider(cfg, season):
+    w, h = 1200, 40
+    rng = random.Random(f"{season}-divider")
+    body = f"""<rect x="0" y="{h / 2 - 1:.0f}" width="{w}" height="2" rx="1" fill="url(#edge)" opacity=".6"/>
+  {particles(cfg, rng, w, h, 6, mode="drift", smin=.5, smax=.9)}"""
+    return svg(w, h, "divider", common_defs(cfg, w, h, 0), "", body, border=False)
+
+
+def section(cfg, season, key, title):
+    w, h = 1200, 84
+    rng = random.Random(f"{season}-{key}")
+    style = f"""
+    .t {{ font: 800 34px {SANS}; letter-spacing: 1px; opacity: 0; animation: rise .9s cubic-bezier(.2,.8,.2,1) .1s forwards; }}
+    @keyframes rise {{ from {{ opacity: 0; transform: translateY(10px) }} to {{ opacity: 1; transform: translateY(0) }} }}"""
+    body = f"""<g clip-path="url(#card)">
+    <rect width="{w}" height="{h}" fill="url(#bg)"/>
+    <rect width="{w}" height="{h}" fill="url(#grid)"/>
+    {blobs(w, h, .6)}
+    {particles(cfg, rng, w, h, 9, smin=.45, smax=.85, omin=.4, omax=.75)}
+    <text class="t" x="{w / 2:.0f}" y="54" text-anchor="middle" fill="url(#title)">{title}</text>
+    <rect x="{w / 2 - 120:.0f}" y="68" width="240" height="2" rx="1" fill="url(#edge)"/>
+  </g>"""
+    return svg(w, h, title, common_defs(cfg, w, h, 16), style, body, rx=16)
+
+
+def footer(cfg, season):
+    w, h = 1200, 170
+    rng = random.Random(f"{season}-footer")
+    style = f"""
+    .t {{ font: 800 36px {SANS}; }}
+    .s {{ font: 500 15px {MONO}; fill: #8b949e; }}"""
+    body = f"""<g clip-path="url(#card)">
+    <rect width="{w}" height="{h}" fill="url(#bg)"/>
+    <rect width="{w}" height="{h}" fill="url(#grid)"/>
+    {blobs(w, h, .8)}
+    {particles(cfg, rng, w, h, 18, smin=.5, smax=1.1)}
+    {ground(cfg, rng, w, h)}
+    <text class="t" x="{w / 2:.0f}" y="78" text-anchor="middle" fill="url(#title)">Thanks for visiting!</text>
+    <text class="s" x="{w / 2:.0f}" y="108" text-anchor="middle">{cfg["tag"]} · {cfg["bye"]}</text>
+  </g>"""
+    return svg(w, h, "Thanks for visiting", common_defs(cfg, w, h, 22), style, body)
+
+
+def terminal(cfg, season):
+    w, h = 900, 400
+    rng = random.Random(f"{season}-terminal")
+    style = f"""
+    .mono {{ font: 500 17px {MONO}; }}
+    .p {{ fill: #a78bfa }} .t {{ fill: #00E5FF }} .w {{ fill: #e6edf3 }} .m {{ fill: #8b949e }} .k {{ fill: #FF4FA3 }} .g {{ fill: #3fb950 }} .y {{ fill: #f2cc60 }}
+    .ln {{ opacity: 0; animation: show .01s linear forwards; }}
+    @keyframes show {{ to {{ opacity: 1 }} }}
+    .type {{ clip-path: inset(0 100% 0 0); animation: type .9s steps(28) forwards; }}
+    @keyframes type {{ to {{ clip-path: inset(0 0 0 0) }} }}
+    .cursor {{ fill: #00E5FF; animation: blink 1s steps(1) infinite; }}
+    @keyframes blink {{ 50% {{ opacity: 0 }} }}
+    .glow {{ animation: glow 4s ease-in-out infinite; }}
+    @keyframes glow {{ 0%,100% {{ stroke-opacity: .25 }} 50% {{ stroke-opacity: .7 }} }}"""
+    t1, _, t3 = cfg["title"]
+    defs = common_defs(cfg, w, h, 14) + f"""
+    <linearGradient id="border" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#7C3AED"/><stop offset=".5" stop-color="{t3}"/><stop offset="1" stop-color="{t1}"/>
+    </linearGradient>"""
+    body = f"""<g clip-path="url(#card)">
+    <rect width="{w}" height="{h}" fill="#0d1117"/>
+    {blobs(w, h, .35)}
+    {particles(cfg, rng, w, h, 12, smin=.45, smax=.9, omin=.25, omax=.5)}
+  </g>
+  <rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="14" fill="none" stroke="url(#border)" stroke-width="2" class="glow"/>
+  <path d="M1 15a14 14 0 0 1 14-14h870a14 14 0 0 1 14 14v25H1z" fill="#161b22"/>
+  <circle cx="26" cy="21" r="6.5" fill="#ff5f56"/><circle cx="48" cy="21" r="6.5" fill="#ffbd2e"/><circle cx="70" cy="21" r="6.5" fill="#27c93f"/>
+  <text x="450" y="26" text-anchor="middle" class="mono m" style="font-size:13px">aman — zsh — 90×24</text>
+
+  <g class="mono">
+    <g class="ln" style="animation-delay:.3s"><text x="28" y="80"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><text x="70" y="80" class="w type" style="animation-delay:.3s">whoami</text></g>
+    <text x="28" y="108" class="ln w" style="animation-delay:1.3s">Aman Singh · software engineer · India 🇮🇳</text>
+
+    <g class="ln" style="animation-delay:1.8s"><text x="28" y="146"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><text x="70" y="146" class="w type" style="animation-delay:1.8s">cat about.yml</text></g>
+    <g class="ln" style="animation-delay:2.9s">
+      <text x="28" y="174"><tspan class="k">loves:</tspan><tspan class="w">     backend · cloud · systems that scale</tspan></text>
+      <text x="28" y="200"><tspan class="k">tinkers:</tspan><tspan class="w">   automation, dev tooling, side projects</tspan></text>
+      <text x="28" y="226"><tspan class="k">past:</tspan><tspan class="w">      hackathon winner · research · problem solver</tspan></text>
+      <text x="28" y="252"><tspan class="k">status:</tspan><tspan class="g">    ● building something new</tspan></text>
+    </g>
+
+    <g class="ln" style="animation-delay:3.5s"><text x="28" y="290"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><text x="70" y="290" class="w type" style="animation-delay:3.5s">echo $MOTTO</text></g>
+    <text x="28" y="318" class="ln y" style="animation-delay:4.5s">"make it work, make it fast, make it boring"</text>
+
+    <g class="ln" style="animation-delay:5s"><text x="28" y="356"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><rect x="70" y="341" width="10" height="20" class="cursor"/></g>
+  </g>"""
+    return svg(w, h, "whoami terminal", defs, style, body, rx=14, border=False)
+
+
+SECTIONS = {
+    "toolbox": "Toolbox",
+    "highlights": "Highlights",
+    "motion": "GitHub in Motion",
+}
+
+
+def build_all(season):
+    cfg = SEASONS[season]
+    files = {
+        "header.svg": header(cfg, season),
+        "divider.svg": divider(cfg, season),
+        "terminal.svg": terminal(cfg, season),
+        "footer.svg": footer(cfg, season),
+    }
+    for key, title in SECTIONS.items():
+        files[f"section-{key}.svg"] = section(cfg, season, key, title)
+    return files
+
+
+if __name__ == "__main__":
+    season = os.environ.get("SEASON") or season_for(datetime.date.today())
+    out_dir = sys.argv[1] if len(sys.argv) > 1 else "assets"
+    os.makedirs(out_dir, exist_ok=True)
+    for name, content in build_all(season).items():
+        with open(os.path.join(out_dir, name), "w", encoding="utf-8") as f:
+            f.write(content)
+    print(f"wrote {len(SECTIONS) + 4} files to {out_dir} ({season})")

@@ -15,13 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate header for current season
-        run: python3 .github/scripts/season_header.py assets/header.svg
+      - name: Generate seasonal assets
+        run: python3 .github/scripts/season_assets.py assets
 
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/header.svg
-          git commit -m "chore: seasonal header update" || exit 0
+          git add assets/*.svg
+          git commit -m "chore: seasonal assets update" || exit 0
           git push

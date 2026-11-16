@@ -17,7 +17,7 @@
 
 <img src="./assets/divider.svg" width="100%"/>
 
-## ⚡ Toolbox
+<img src="./assets/section-toolbox.svg" width="100%" alt="Toolbox"/>
 
 <img src="https://skillicons.dev/icons?i=python,typescript,javascript,cpp,bash,mysql&theme=dark" /><br/>
 <img src="https://skillicons.dev/icons?i=django,nodejs,postgres,redis,rabbitmq,kafka&theme=dark" /><br/>
@@ -26,7 +26,7 @@
 
 <img src="./assets/divider.svg" width="100%"/>
 
-## 🏆 Highlights
+<img src="./assets/section-highlights.svg" width="100%" alt="Highlights"/>
 
 <img src="https://img.shields.io/badge/🏆_Innohacks-Winner_·_100%2B_teams-7C3AED?style=for-the-badge&labelColor=0d1117"/>
 <img src="https://img.shields.io/badge/🔬_IIT_Bombay-Research-00B8D4?style=for-the-badge&labelColor=0d1117"/>
@@ -36,7 +36,7 @@
 
 <img src="./assets/divider.svg" width="100%"/>
 
-## 📊 GitHub in Motion
+<img src="./assets/section-motion.svg" width="100%" alt="GitHub in Motion"/>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amansquadstack/amansquadstack/main/profile-3d-contrib/profile-night-rainbow.svg" />
@@ -61,6 +61,6 @@
 
 <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight" width="80%" />
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7C3AED,50:00E5FF,100:FF4FA3&height=120&section=footer&text=Thanks%20for%20visiting!&fontSize=22&fontColor=ffffff&fontAlignY=72&animation=twinkling" width="100%"/>
+<img src="./assets/footer.svg" width="100%" alt="Thanks for visiting"/>
 
 </div>

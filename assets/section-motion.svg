@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="84" viewBox="0 0 1200 84" role="img" aria-label="GitHub in Motion">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07070f"/><stop offset="0.55" stop-color="#120a2a"/><stop offset="1" stop-color="#04121f"/>
+    </linearGradient>
+    <radialGradient id="blobA"><stop offset="0" stop-color="#7C3AED" stop-opacity="0.7"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobB"><stop offset="0" stop-color="#f97316" stop-opacity="0.5"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobC"><stop offset="0" stop-color="#dc2626" stop-opacity="0.45"/><stop offset="1" stop-color="#dc2626" stop-opacity="0"/></radialGradient>
+    <linearGradient id="title" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset="0.5" stop-color="#fde68a"/><stop offset="1" stop-color="#f97316"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="0 0;1200 0" dur="8s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" x2="1">
+      <stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset="0.5" stop-color="#f97316"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+    </pattern>
+    <clipPath id="card"><rect width="1200" height="84" rx="16"/></clipPath>
+    <g id="snow" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none">
+      <path d="M0-9V9M-7.8-4.5L7.8 4.5M-7.8 4.5L7.8-4.5"/>
+      <path d="M-2.5-7L0-4.5L2.5-7M-2.5 7L0 4.5L2.5 7M-7.3-1.2L-4-2.3L-4.8-5.5M7.3 1.2L4 2.3L4.8 5.5M-7.3 1.2L-4 2.3L-4.8 5.5M7.3-1.2L4-2.3L4.8-5.5" stroke-width="1.1"/>
+    </g>
+    <path id="leaf" fill="currentColor" d="M0-12L2.5-6L6-8.5L5-3L10.5-4.5L8.5 0L11.5 2L5.5 3.2L6.5 7.5L1.2 5.2L.8 12H-.8L-1.2 5.2L-6.5 7.5L-5.5 3.2L-11.5 2L-8.5 0L-10.5-4.5L-5-3L-6-8.5L-2.5-6Z"/>
+    <path id="petal" fill="currentColor" d="M0-7C4.5-7 6-1 0 7C-6-1-4.5-7-1.2-6.2L0-4.6L1.2-6.2Z"/>
+    <radialGradient id="ffglow"><stop offset="0" stop-color="#fff7c2"/><stop offset=".35" stop-color="#fcd34d" stop-opacity=".9"/><stop offset="1" stop-color="#fcd34d" stop-opacity="0"/></radialGradient>
+  </defs>
+  <style>
+    .t { font: 800 34px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px; opacity: 0; animation: rise .9s cubic-bezier(.2,.8,.2,1) .1s forwards; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+  </style>
+  <g clip-path="url(#card)">
+    <rect width="1200" height="84" fill="url(#bg)"/>
+    <rect width="1200" height="84" fill="url(#grid)"/>
+    <g opacity="0.6">
+    <ellipse cx="240" cy="21" rx="324" ry="60" fill="url(#blobA)">
+      <animate attributeName="cx" values="240;420;240" dur="14s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="960" cy="63" rx="300" ry="60" fill="url(#blobB)">
+      <animate attributeName="cx" values="960;780;960" dur="12s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="636" cy="84" rx="264" ry="50" fill="url(#blobC)">
+      <animate attributeName="cx" values="636;516;756;636" dur="16s" repeatCount="indefinite"/>
+    </ellipse></g>
+    <g><animateTransform attributeName="transform" type="translate" values="338 -30; 379 42; 318 114" dur="12.7s" begin="-10.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="5.9s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.69" transform="scale(0.58)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="624 -30; 585 42; 644 114" dur="17.2s" begin="-6.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="6.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#f97316" opacity="0.73" transform="scale(0.65)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="507 -30; 474 42; 524 114" dur="10.1s" begin="-7.5s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="4.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#f59e0b" opacity="0.41" transform="scale(0.55)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="371 -30; 389 42; 362 114" dur="14.5s" begin="-9.3s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="6.6s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.65" transform="scale(0.61)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="48 -30; 68 42; 38 114" dur="12.3s" begin="-0.5s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.1s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.44" transform="scale(0.80)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="902 -30; 945 42; 880 114" dur="13.6s" begin="-3.8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#ea580c" opacity="0.56" transform="scale(0.61)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="1122 -30; 1089 42; 1138 114" dur="10.3s" begin="-7.6s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="7.7s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.41" transform="scale(0.79)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="269 -30; 294 42; 256 114" dur="17.9s" begin="-11.9s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="360;0" dur="6.3s" repeatCount="indefinite"/><use href="#leaf" style="color:#dc2626" opacity="0.51" transform="scale(0.81)"/></g></g>
+    <g><animateTransform attributeName="transform" type="translate" values="329 -30; 363 42; 312 114" dur="10.3s" begin="-0.2s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" values="0;360" dur="5.5s" repeatCount="indefinite"/><use href="#leaf" style="color:#b45309" opacity="0.69" transform="scale(0.45)"/></g></g>
+    <text class="t" x="600" y="54" text-anchor="middle" fill="url(#title)">GitHub in Motion</text>
+    <rect x="480" y="68" width="240" height="2" rx="1" fill="url(#edge)"/>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="83" rx="16" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+</svg>
