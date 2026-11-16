@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="Aman Singh">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07070f"/>
+      <stop offset="0.55" stop-color="#120a2a"/>
+      <stop offset="1" stop-color="#04121f"/>
+    </linearGradient>
+    <radialGradient id="blobA"><stop offset="0" stop-color="#7C3AED" stop-opacity="0.75"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobB"><stop offset="0" stop-color="#00E5FF" stop-opacity="0.55"/><stop offset="1" stop-color="#00E5FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="blobC"><stop offset="0" stop-color="#FF4FA3" stop-opacity="0.5"/><stop offset="1" stop-color="#FF4FA3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="name" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0" spreadMethod="repeat">
+      <stop offset="0" stop-color="#a78bfa"/>
+      <stop offset="0.25" stop-color="#00E5FF"/>
+      <stop offset="0.5" stop-color="#ffffff"/>
+      <stop offset="0.75" stop-color="#FF4FA3"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1200 0;0 0" dur="6s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" x2="1">
+      <stop offset="0" stop-color="#7C3AED" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#FF4FA3" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+    </pattern>
+    <clipPath id="card"><rect width="1200" height="340" rx="22"/></clipPath>
+  </defs>
+
+  <style>
+    .star { fill: #fff; animation: twinkle 3s ease-in-out infinite; }
+    .s2 { animation-delay: .6s } .s3 { animation-delay: 1.2s } .s4 { animation-delay: 1.8s } .s5 { animation-delay: 2.4s }
+    @keyframes twinkle { 0%,100% { opacity: .15 } 50% { opacity: .9 } }
+    .title { font: 800 92px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; letter-spacing: -2px;
+             opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .2s forwards; }
+    .sub { font: 500 24px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif; fill: #c9d1d9; letter-spacing: 6px;
+           opacity: 0; animation: rise 1s cubic-bezier(.2,.8,.2,1) .7s forwards; }
+    .prompt { font: 500 18px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; fill: #8b949e;
+              opacity: 0; animation: rise 1s ease 1.2s forwards; }
+    .accent { fill: #00E5FF } .accent2 { fill: #a78bfa }
+    .cursor { fill: #00E5FF; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0 } }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+    .ring { fill: none; stroke: #7C3AED; stroke-opacity: .35; stroke-dasharray: 6 10; transform-origin: 1060px 90px; animation: spin 24s linear infinite; }
+    .ring2 { fill: none; stroke: #00E5FF; stroke-opacity: .3; stroke-dasharray: 2 8; transform-origin: 140px 270px; animation: spin 18s linear infinite reverse; }
+    @keyframes spin { to { transform: rotate(360deg) } }
+    .scan { animation: scan 4s ease-in-out infinite; }
+    @keyframes scan { 0%,100% { transform: translateX(-300px); opacity: 0 } 50% { opacity: 1 } 100% { transform: translateX(300px) } }
+  </style>
+
+  <g clip-path="url(#card)">
+    <rect width="1200" height="340" fill="url(#bg)"/>
+    <rect width="1200" height="340" fill="url(#grid)"/>
+
+    <ellipse cx="250" cy="80" rx="320" ry="220" fill="url(#blobA)">
+      <animate attributeName="cx" values="250;420;250" dur="14s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="80;160;80" dur="11s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="950" cy="260" rx="300" ry="200" fill="url(#blobB)">
+      <animate attributeName="cx" values="950;780;950" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="260;190;260" dur="9s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="640" cy="330" rx="260" ry="160" fill="url(#blobC)">
+      <animate attributeName="cx" values="640;520;760;640" dur="16s" repeatCount="indefinite"/>
+    </ellipse>
+
+    <circle class="ring" cx="1060" cy="90" r="70"/>
+    <circle class="ring" cx="1060" cy="90" r="110" style="animation-duration:36s"/>
+    <circle class="ring2" cx="140" cy="270" r="60"/>
+
+    <circle class="star" cx="90" cy="60" r="1.6"/>
+    <circle class="star s2" cx="300" cy="300" r="1.2"/>
+    <circle class="star s3" cx="520" cy="40" r="1.8"/>
+    <circle class="star s4" cx="760" cy="70" r="1.3"/>
+    <circle class="star s5" cx="880" cy="300" r="1.7"/>
+    <circle class="star s2" cx="1130" cy="250" r="1.4"/>
+    <circle class="star s3" cx="1000" cy="30" r="1.1"/>
+    <circle class="star s4" cx="200" cy="170" r="1.2"/>
+    <circle class="star s5" cx="420" cy="230" r="1.5"/>
+    <circle class="star" cx="1150" cy="160" r="1.3"/>
+
+    <text class="title" x="600" y="160" text-anchor="middle" fill="url(#name)">Aman Singh</text>
+    <text class="sub" x="600" y="210" text-anchor="middle">SOFTWARE ENGINEER · BUILDER · TINKERER</text>
+
+    <rect x="450" y="232" width="300" height="2" fill="url(#line)" class="scan"/>
+
+    <text class="prompt" x="600" y="280" text-anchor="middle"><tspan class="accent2">aman@github</tspan>:<tspan class="accent">~</tspan>$ building something new<tspan class="cursor">▍</tspan></text>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="339" rx="22" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="400" viewBox="0 0 900 400" role="img" aria-label="whoami terminal">
+  <style>
+    .mono { font: 500 17px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+    .p { fill: #a78bfa } .t { fill: #00E5FF } .w { fill: #e6edf3 } .m { fill: #8b949e } .k { fill: #FF4FA3 } .g { fill: #3fb950 } .y { fill: #f2cc60 }
+    .ln { opacity: 0; animation: show .01s linear forwards; }
+    @keyframes show { to { opacity: 1 } }
+    .type { clip-path: inset(0 100% 0 0); animation: type .9s steps(28) forwards; }
+    @keyframes type { to { clip-path: inset(0 0 0 0) } }
+    .cursor { fill: #00E5FF; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0 } }
+    .glow { animation: glow 4s ease-in-out infinite; }
+    @keyframes glow { 0%,100% { stroke-opacity: .25 } 50% { stroke-opacity: .7 } }
+  </style>
+  <defs>
+    <linearGradient id="border" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#7C3AED"/><stop offset=".5" stop-color="#00E5FF"/><stop offset="1" stop-color="#FF4FA3"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="898" height="398" rx="14" fill="#0d1117"/>
+  <rect x="1" y="1" width="898" height="398" rx="14" fill="none" stroke="url(#border)" stroke-width="2" class="glow"/>
+  <path d="M1 15a14 14 0 0 1 14-14h870a14 14 0 0 1 14 14v25H1z" fill="#161b22"/>
+  <circle cx="26" cy="21" r="6.5" fill="#ff5f56"/><circle cx="48" cy="21" r="6.5" fill="#ffbd2e"/><circle cx="70" cy="21" r="6.5" fill="#27c93f"/>
+  <text x="450" y="26" text-anchor="middle" class="mono m" style="font-size:13px">aman — zsh — 90×24</text>
+
+  <g class="mono">
+    <g class="ln" style="animation-delay:.3s"><text x="28" y="80"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><text x="70" y="80" class="w type" style="animation-delay:.3s">whoami</text></g>
+    <text x="28" y="108" class="ln w" style="animation-delay:1.3s">Aman Singh · software engineer · India 🇮🇳</text>
+
+    <g class="ln" style="animation-delay:1.8s"><text x="28" y="146"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><text x="70" y="146" class="w type" style="animation-delay:1.8s">cat about.yml</text></g>
+    <g class="ln" style="animation-delay:2.9s">
+      <text x="28" y="174"><tspan class="k">loves:</tspan><tspan class="w">     backend · cloud · systems that scale</tspan></text>
+      <text x="28" y="200"><tspan class="k">tinkers:</tspan><tspan class="w">   automation, dev tooling, side projects</tspan></text>
+      <text x="28" y="226"><tspan class="k">past:</tspan><tspan class="w">      hackathon winner · research · problem solver</tspan></text>
+      <text x="28" y="252"><tspan class="k">status:</tspan><tspan class="g">    ● building something new</tspan></text>
+    </g>
+
+    <g class="ln" style="animation-delay:3.5s"><text x="28" y="290"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><text x="70" y="290" class="w type" style="animation-delay:3.5s">echo $MOTTO</text></g>
+    <text x="28" y="318" class="ln y" style="animation-delay:4.5s">"make it work, make it fast, make it boring"</text>
+
+    <g class="ln" style="animation-delay:5s"><text x="28" y="356"><tspan class="p">➜ </tspan><tspan class="t">~ </tspan></text><rect x="70" y="341" width="10" height="20" class="cursor"/></g>
+  </g>
+</svg>

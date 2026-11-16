@@ -1,123 +1,64 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=200&section=header&text=Aman%20Singh&fontSize=70&fontColor=fff&animation=fadeIn&fontAlignY=38&desc=Platform%20Engineer%20%E2%80%A2%20Backend%20%E2%80%A2%20Infrastructure&descAlignY=58&descSize=20" width="100%"/>
+<img src="./assets/header.svg" width="100%" alt="Aman Singh"/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=7C3AED&center=true&vCenter=true&multiline=false&width=600&height=45&lines=Building+autoscaling+systems+%40+SquadStack;Taming+Celery+workers+at+scale;AWS+%E2%80%A2+Kubernetes+%E2%80%A2+Observability;Shipping+infra+that+doesn't+page+me+at+3AM" alt="Typing SVG" />
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2800&pause=900&color=00E5FF&center=true&vCenter=true&width=640&height=48&lines=Hey+there%2C+I'm+Aman+%F0%9F%91%8B;I+build+backends+that+scale;Cloud+%E2%80%A2+Systems+%E2%80%A2+Automation;Currently+building+something+new+%F0%9F%9A%80" alt="Typing SVG"/></a>
 
-<br/>
-
+<p>
 <a href="https://www.linkedin.com/in/codewithaman07/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
 <a href="mailto:codewithaman07@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white"/></a>
-<a href="https://codolio.com/profile/codewithaman"><img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black"/></a>
+<a href="https://codolio.com/profile/codewithaman"><img src="https://img.shields.io/badge/Codolio-FFA116?style=for-the-badge&logo=codeforces&logoColor=black"/></a>
 <img src="https://komarev.com/ghpvc/?username=amansquadstack&style=for-the-badge&color=7C3AED&label=PROFILE+VIEWS"/>
+</p>
 
-</div>
+<img src="./assets/divider.svg" width="100%"/>
 
-<br/>
+<img src="./assets/terminal.svg" width="88%" alt="whoami"/>
 
-## <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> About Me
+<img src="./assets/divider.svg" width="100%"/>
 
-```typescript
-const aman = {
-    role: "Platform Engineer @ SquadStack",
-    location: "ap-south-1 🇮🇳",
-    currentFocus: [
-        "Celery autoscaling — spot + on-demand fleet orchestration",
-        "Log pipelines — Vector/VRL → ClickHouse at scale",
-        "Observability — Prometheus, Grafana, Sentry",
-    ],
-    funFact: "My Grafana dashboards have dashboards",
-};
-```
+## ⚡ Toolbox
 
-<br/>
-
-## <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30"> Tech Arsenal
-
-<div align="center">
-
-**Languages**
-
-<img src="https://skillicons.dev/icons?i=python,cpp,typescript,javascript,bash,mysql&theme=dark" />
-
-**Backend & Data**
-
-<img src="https://skillicons.dev/icons?i=django,nodejs,postgres,redis,rabbitmq,kafka&theme=dark" />
-
-**Cloud & Infra**
-
-<img src="https://skillicons.dev/icons?i=aws,kubernetes,docker,terraform,linux,nginx&theme=dark" />
-
-**Observability & Tooling**
-
+<img src="https://skillicons.dev/icons?i=python,typescript,javascript,cpp,bash,mysql&theme=dark" /><br/>
+<img src="https://skillicons.dev/icons?i=django,nodejs,postgres,redis,rabbitmq,kafka&theme=dark" /><br/>
+<img src="https://skillicons.dev/icons?i=aws,kubernetes,docker,terraform,linux,nginx&theme=dark" /><br/>
 <img src="https://skillicons.dev/icons?i=prometheus,grafana,sentry,elasticsearch,git,githubactions&theme=dark" />
 
+<img src="./assets/divider.svg" width="100%"/>
+
+## 🏆 Highlights
+
+<img src="https://img.shields.io/badge/🏆_Innohacks-Champion_(100%2B_teams)-7C3AED?style=for-the-badge&labelColor=0d1117"/>
+<img src="https://img.shields.io/badge/🔬_IIT_Bombay-Research-00B8D4?style=for-the-badge&labelColor=0d1117"/>
 <br/>
+<img src="https://img.shields.io/badge/🎖️_Delhi_Govt.-Excellence_in_Education-FF4FA3?style=for-the-badge&labelColor=0d1117"/>
+<img src="https://img.shields.io/badge/📚_Chegg-SME-F2CC60?style=for-the-badge&labelColor=0d1117"/>
 
-<sub>plus: <code>celery</code> · <code>clickhouse</code> · <code>vector.dev</code> · <code>pgqueue</code> · <code>promql</code></sub>
+<img src="./assets/divider.svg" width="100%"/>
 
-</div>
+## 📊 GitHub in Motion
 
-<br/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./profile-3d-contrib/profile-night-rainbow.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="./profile-3d-contrib/profile-season-animate.svg" />
+  <img src="./profile-3d-contrib/profile-night-rainbow.svg" width="100%" alt="3D contribution graph" />
+</picture>
 
-## <img src="https://media.giphy.com/media/W5eoZHPpUx9sapR0eu/giphy.gif" width="30"> GitHub Analytics
+<img src="https://streak-stats.demolab.com?user=amansquadstack&hide_border=true&background=0d1117&stroke=7C3AED&ring=00E5FF&fire=FF4FA3&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=00E5FF&sideLabels=a78bfa&dates=8B949E" width="49%" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=amansquadstack&theme=tokyonight" width="49%" />
 
-<div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=amansquadstack&show_icons=true&hide_border=true&count_private=true&theme=tokyonight&bg_color=0d1117&title_color=7C3AED&icon_color=00E5FF&cache_seconds=1800" height="165" />
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=amansquadstack&layout=compact&hide_border=true&theme=tokyonight&bg_color=0d1117&title_color=7C3AED&langs_count=8&cache_seconds=1800" height="165" />
-
-<br/><br/>
-
-<img src="https://streak-stats.demolab.com?user=amansquadstack&hide_border=true&background=0d1117&stroke=7C3AED&ring=00E5FF&fire=FF6B6B&currStreakNum=FFFFFF&sideNums=FFFFFF&currStreakLabel=7C3AED&sideLabels=7C3AED&dates=8B949E" height="165" />
-
-<br/><br/>
-
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=amansquadstack&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=7C3AED&line=00E5FF&point=FF6B6B&area=true&area_color=302b63" width="95%" />
-
-</div>
-
-<br/>
-
-## <img src="https://media.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif" width="28"> Contribution Snake
-
-<div align="center">
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=amansquadstack&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=a78bfa&line=00E5FF&point=FF4FA3&area=true&area_color=7C3AED&radius=12" width="100%" />
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amansquadstack/amansquadstack/output/github-contribution-grid-snake-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/amansquadstack/amansquadstack/output/github-contribution-grid-snake.svg" />
-  <img alt="contribution snake" src="https://raw.githubusercontent.com/amansquadstack/amansquadstack/output/github-contribution-grid-snake-dark.svg" />
+  <img alt="contribution snake" src="https://raw.githubusercontent.com/amansquadstack/amansquadstack/output/github-contribution-grid-snake-dark.svg" width="100%" />
 </picture>
 
-</div>
+<img src="./assets/divider.svg" width="100%"/>
 
-<br/>
+<img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight" width="80%" />
 
-## <img src="https://media.giphy.com/media/jU9PVpqUvR0aNc3nvX/giphy.gif" width="30"> Highlights
-
-<table>
-<tr>
-<td>
-
-🏆 &nbsp;**Innohacks Champion** — outbuilt 100+ teams
-
-🔬 &nbsp;**IIT Bombay Research** — yoga × logical thinking study
-
-</td>
-<td>
-
-🎖️ &nbsp;**Excellence in Education** — Delhi Govt. award
-
-📚 &nbsp;**Chegg SME** — 100+ problems · 90 CF score
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-<div align="center">
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=120&section=footer&text=Thanks%20for%20stopping%20by!&fontSize=24&fontColor=fff&animation=twinkling&fontAlignY=75" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:7C3AED,50:00E5FF,100:FF4FA3&height=120&section=footer&text=Thanks%20for%20visiting!&fontSize=22&fontColor=ffffff&fontAlignY=72&animation=twinkling" width="100%"/>
 
 </div>
