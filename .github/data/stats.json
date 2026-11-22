@@ -1,15 +1,14 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "contributions": 1832,
   "commits": 1260,
   "prs": 483,
   "reviews": 77,
   "issues": 9,
   "repos": 25,
-  "current_streak": 1,
+  "current_streak": 0,
   "longest_streak": 13,
   "weekly": [
-    0,
     0,
     0,
     0,
@@ -61,7 +60,8 @@
     118,
     159,
     111,
-    83
+    83,
+    0
   ],
   "languages": [
     {
