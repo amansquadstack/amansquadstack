@@ -15,28 +15,28 @@
   <text x="1168" y="48" class="lbl" text-anchor="end">INCL. PRIVATE REPOS</text>
   <g opacity="0" transform="translate(0 10)"><animate attributeName="opacity" values="0;1" dur=".6s" begin="0.20s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 10;0 0" dur=".7s" begin="0.20s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/>
       <text x="32.0" y="98" style="font: 500 15px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif" fill="#ece4d4">Python</text>
-      <text x="576.0" y="98" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">69.6%</text>
+      <text x="576.0" y="98" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">69.2%</text>
       <rect x="32.0" y="110" width="544.0" height="4" rx="2" fill="#ece4d4" fill-opacity=".07"/>
       <rect x="32.0" y="110" width="0" height="4" rx="2" fill="#c56a3d">
         <animate attributeName="width" values="0;544.0" dur="1.2s" begin="0.35s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
   <g opacity="0" transform="translate(0 10)"><animate attributeName="opacity" values="0;1" dur=".6s" begin="0.30s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 10;0 0" dur=".7s" begin="0.30s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/>
       <text x="32.0" y="150" style="font: 500 15px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif" fill="#ece4d4">HCL</text>
-      <text x="576.0" y="150" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">16.3%</text>
+      <text x="576.0" y="150" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">16.6%</text>
       <rect x="32.0" y="162" width="544.0" height="4" rx="2" fill="#ece4d4" fill-opacity=".07"/>
       <rect x="32.0" y="162" width="0" height="4" rx="2" fill="#c56a3d">
-        <animate attributeName="width" values="0;127.4" dur="1.2s" begin="0.45s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
+        <animate attributeName="width" values="0;130.5" dur="1.2s" begin="0.45s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
   <g opacity="0" transform="translate(0 10)"><animate attributeName="opacity" values="0;1" dur=".6s" begin="0.40s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 10;0 0" dur=".7s" begin="0.40s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/>
       <text x="32.0" y="202" style="font: 500 15px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif" fill="#ece4d4">Shell</text>
       <text x="576.0" y="202" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">9.3%</text>
       <rect x="32.0" y="214" width="544.0" height="4" rx="2" fill="#ece4d4" fill-opacity=".07"/>
       <rect x="32.0" y="214" width="0" height="4" rx="2" fill="#c56a3d">
-        <animate attributeName="width" values="0;72.7" dur="1.2s" begin="0.55s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
+        <animate attributeName="width" values="0;73.1" dur="1.2s" begin="0.55s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
   <g opacity="0" transform="translate(0 10)"><animate attributeName="opacity" values="0;1" dur=".6s" begin="0.50s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 10;0 0" dur=".7s" begin="0.50s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/>
       <text x="624.0" y="98" style="font: 500 15px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif" fill="#ece4d4">Go</text>
-      <text x="1168.0" y="98" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">2.6%</text>
+      <text x="1168.0" y="98" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">2.8%</text>
       <rect x="624.0" y="110" width="544.0" height="4" rx="2" fill="#ece4d4" fill-opacity=".07"/>
       <rect x="624.0" y="110" width="0" height="4" rx="2" fill="#c56a3d">
-        <animate attributeName="width" values="0;20.3" dur="1.2s" begin="0.65s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
+        <animate attributeName="width" values="0;22.0" dur="1.2s" begin="0.65s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/></rect></g>
   <g opacity="0" transform="translate(0 10)"><animate attributeName="opacity" values="0;1" dur=".6s" begin="0.60s" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 10;0 0" dur=".7s" begin="0.60s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/>
       <text x="624.0" y="150" style="font: 500 15px 'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif" fill="#ece4d4">TypeScript</text>
       <text x="1168.0" y="150" text-anchor="end" style="font: 500 13px 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" fill="#b9b0a2">1.1%</text>
